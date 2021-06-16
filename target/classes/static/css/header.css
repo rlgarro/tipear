@@ -1,0 +1,45 @@
+#header-div {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    font-family: "Roboto Mono";
+    font-weight: 600;
+}
+
+#header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+}
+
+#header ul{
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+}
+
+#header ul li{
+   list-style: none;
+   margin-right: 25px;
+}
+
+#header ul li a{
+    color: #555;
+    text-transform: uppercase;
+    font-size: 25px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#header ul li a:hover{
+    color: #fff;
+}
+
+}
+#header ul li a{
+    color: #fff;
+}

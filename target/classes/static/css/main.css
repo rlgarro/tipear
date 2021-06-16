@@ -1,0 +1,153 @@
+body {
+  background-color: black;
+  font-family: "Roboto Mono";
+}
+
+
+h1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+}
+
+.title-span {
+  font-family: "Roboto Mono";
+  font-weight: 700;
+  color: #fff;
+  font-size: 55px;
+}
+
+#main-div {
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#main-div ul {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+
+}
+
+#main-div ul li{
+    list-style: none;
+    margin: 10px;
+}
+
+#main-div ul li a{
+    font-size: 35px;
+    color: #b8bb26;
+}
+
+/* LOGIN */
+.form {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto Mono";
+}
+
+.form input{
+    width: 40%;
+    height: 15%;
+    font-size: 22px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.form labels {
+    font-weight: 700;
+    width: 100%;
+}
+
+.form-buttons {
+    width: 40%;
+    height: 75px;
+    margin-top: 40px;
+}
+
+.form-buttons button{
+    width: 45%;
+    height: 35px;
+    margin: 2px;
+    font-size: 22px;
+    background-color: #666;
+    cursor: pointer;
+    color: #ccc;
+    margin-right: 10px;
+    border-color: #666;
+}
+
+.form-buttons button:hover{
+    color: #b8bb26
+}
+
+
+.form-buttons button a{
+    font-size: 22px;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.form-buttons button a:hover{
+    color: #b8bb26
+}
+
+
+.main-div {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto Mono";
+}
+
+#start-div {
+  width: 70%;
+  height: 100%;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#start-div h1 {
+    font-size: 42px;
+}
+
+#start-div h2 {
+  margin-top: 0px;
+  margin-bottom: 40px;
+  color: #b8bb26;
+  font-size: 30px;
+}
+.start-menu {
+  display: flex;
+  list-style: none;
+}
+
+.start-menu li{
+  margin: 7px;
+}
+
+.start-menu li a{
+  background-color: #666;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #ccc;
+}
+
+.start-menu li a:hover{
+  cursor: pointer;
+  color: #fff;
+}

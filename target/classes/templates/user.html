@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello There!</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+
+<div style="color: white;" id="main-div">
+    <!-- FORM FOR THE LOGGED IN USER-->
+    <div class="profile-div" th:if="${session.userAuthorized == true}">
+        <h1 >Hello there, <span style="margin-left: 10px;" th:text="${session.user.username}"></span></h1>
+        <form class="profile-form" th:action="@{/update/${user.username}}">
+            <h3>If you want to you can update your user profile</h3>
+
+            <label th:for="username">Username</label>
+            <br>
+            <input type="text" name="username" th:value="${session.user.username}">
+
+            <label th:for="email">Email</label>
+            <br>
+            <input type="email" name="email" th:value="${session.user.email}">
+
+            <label th:for="password">Password</label>
+            <br>
+            <input type="password" name="password">
+
+            <button type="submit"><a>Save</a></button>
+        </form>
+
+        <div class="tests-info">
+            <div>Test 1 info</div>
+            <div>Test 2 info</div>
+            <div>Test 3 info</div>
+            <div>Test 4 info</div>
+            <div>Test 5 info</div>
+        </div>
+
+    </div>
+
+    <!-- A DIV DISPLAYING THE INFO FOR THE REST -->
+    <div th:if="${session.userAuthorized == false}" id="user-info-display">
+
+        <h1>Username: <span th:text="${session.userRequested.username}"></span></h1>
+    </div>
+
+</div>
+
+</body>
+</html>

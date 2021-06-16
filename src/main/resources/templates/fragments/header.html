@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.w3.org/1999/xhtml">
+<body>
+    <div id="header-div" th:fragment="header">
+        <nav id="header">
+            <ul>
+                <li><a th:href="@{/}">Tipear</a></li>
+            </ul>
+            <ul th:if="${session.user != null}">
+                <li><a th:href="@{/u/{user}(user = ${session.user.username})}" th:text="${session.user.username}"></a></li>
+                <li><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+            <ul th:if="${session.user == null}">
+                <li><a th:href="@{/login}">Login</a></li>
+                <li><a th:href="@{/register}">Sign up</a></li>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

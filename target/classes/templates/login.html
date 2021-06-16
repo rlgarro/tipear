@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Tipear | Login Page</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header">...</div>
+<h1><span class="title-span">Sign in</span></h1>
+<div id="main-div">
+    <form class="form" method="POST" th:action="@{/login/process}">
+            <div style="font-size: 25px; color: red;" th:if="${param.error}">Invalid username and password.</div>
+            <input type="text" name="username" required placeholder="Username or email"/>
+            <input type="password" name="password" required placeholder="Password"/>
+            <div class="form-buttons">
+                <button type="submit">Sign in</button>
+                <button><a th:href="@{/register}">Sign up</a></button>
+            </div>
+    </form>
+</div>
+</body>
+</html>

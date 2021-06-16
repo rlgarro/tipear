@@ -1,0 +1,138 @@
+#test-div {
+  width: 60%;
+  height: 50%;
+  display: none;
+}
+
+#text-div {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+}
+
+#text {
+  width: 97%;
+  height: 95%;
+  color: #aaa;
+}
+
+#result {
+  display: none;
+  width: 100%;
+  margin-top: 10px;
+  height: 25%;
+  font-family: "Roboto Mono";
+  font-size: 23px;
+}
+
+#writing-div {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#writing-div input {
+  margin-right: 10px;
+  color: #fff;
+  background: #000;
+  margin-left: 10px;
+  height: 90%;
+  width: 60%;
+  font-size: 25px;
+  border: 0;
+  border-bottom: 1px solid #fff;
+}
+
+#writing-div input::placeholder{
+  color: #aaa;
+}
+
+#writing-div input {
+  outline: none;
+}
+
+#writing-div input:focus {
+  outline: none;
+}
+
+#writing-div p {
+  margin-right: 10px;
+  height: 90%;
+  width: 10%;
+}
+
+#writing-div button {
+  margin-right: 10px;
+  height: 90%;
+  width: 10%;
+}
+
+#info-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto Mono";
+  font-size: 20px;
+}
+
+#wpm  {
+  margin-left: 10px;
+  color: #fff;
+  display: none;
+}
+
+#timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer span {
+  color: white;
+}
+
+#change-bg {
+  border-radius: 5px;
+  color: #fff;
+}
+
+#correct {
+  color: #23e169;
+}
+
+#incorrect {
+  color: #eb4b4b;
+}
+
+.row {
+  width: 100%;
+  margin-top: 10px;
+  height: 25%;
+  font-family: "Roboto Mono";
+  font-size: 23px;
+}
+
+#menu {
+  color: white;
+  font-family: "Roboto Mono";
+  width: 100%;
+  height: 45px;
+  margin-top: 90px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#menu a{
+  font-size: 25px;
+  color: #aaa;
+}
+
+#menu a:hover{
+  cursor: pointer;
+  color: #fff;
+}

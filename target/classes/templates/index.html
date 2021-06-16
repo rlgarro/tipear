@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Tipear</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/test.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div th:replace="fragments/header :: header">...</div>
+    <div class="main-div">
+
+      <div id="start-div">
+        <h1>Welcome to Tipear...</h1>
+        <h2>&lt; A typing test platform &gt;</h2>
+
+        <!-- start "menu" to the typing test -->
+        <ul class="start-menu">
+          <li><a class="testStarter" id="60">1 minute test</a></li>
+          <li><a class="testStarter" id="180">3 minute test</a></li>
+          <li><a class="testStarter" id="300">5 minute test</a></li>
+        </ul>
+      </div>
+
+    <!-- here goes the testing environment -->
+    <div id="test-div">
+
+      <!-- info div, shows time and wpm -->
+      <div id="info-div">
+        <p id="timer"><span>--</span></p>
+      </div>
+
+      <!-- text div, where you show what should be written -->
+      <div id="text-div">
+        <div id="text">
+          <div class="row" id="actual-row"></div>
+          <div class="row" id="next-row"></div>
+          <p id="result"></p>
+        </div>
+      </div>
+
+      <!-- here you input the text, you show the timer and a reboot button -->
+      <div id="writing-div">
+        <input type="text" placeholder="Type to start.." autocomplete="off" id="writing-input" />
+      </div>
+
+      <div id="menu">
+        <a id="goback">Go back</a>
+        <a id="restart">Restart</a>
+      </div>
+
+    </div>
+
+  <script src="js/testTimer.js"></script>
+  <script src="js/inputManager.js"></script>
+  <script src="js/outputManager.js"></script>
+  <script src="js/test.js"></script>
+  <script src="js/testCursor.js"></script>
+  <script src="js/start.js"></script>
+  </body>
+</html>
