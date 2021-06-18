@@ -14,7 +14,7 @@
 <h1><span class="title-span">Sign in</span></h1>
 <div id="main-div">
     <form class="form" method="POST" th:action="@{/login/process}">
-            <div style="font-size: 25px; color: red;" th:if="${param.error}">Invalid username and password.</div>
+            <div style="font-size: 25px; color: red;" th:if="${param.error}">Invalid credentials or account deactivated.</div>
             <input type="text" name="username" required placeholder="Username or email"/>
             <input type="password" name="password" required placeholder="Password"/>
             <div class="form-buttons">

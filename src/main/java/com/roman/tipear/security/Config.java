@@ -1,6 +1,6 @@
 package com.roman.tipear.security;
 
-import com.roman.tipear.implementation.UserDetailsImp;
+import com.roman.tipear.implementation.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class Config extends WebSecurityConfigurerAdapter {
 
    @Autowired
-   private UserDetailsImp userDetailsService;
+   private UserDetailsImpl userDetailsService;
 
    @Bean
    public BCryptPasswordEncoder passwordEncoder() {
@@ -29,7 +29,7 @@ public class Config extends WebSecurityConfigurerAdapter {
 
    @Override
    protected void configure(HttpSecurity http) throws Exception {
-      http.authorizeRequests().antMatchers("/login", "/register").anonymous().antMatchers("/", "/u/**", "/css/**", "/js/**", "/test").permitAll().anyRequest().authenticated()
+      http.authorizeRequests().antMatchers("/login", "/register", "/confirm/**").anonymous().antMatchers("/", "/u/**", "/u/js/**", "/css/**", "/js/**", "/test").permitAll().anyRequest().authenticated()
               .and()
                  .formLogin().usernameParameter("username").loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error=true")
                  .loginProcessingUrl("/login/process").permitAll()

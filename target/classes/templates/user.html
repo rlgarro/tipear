@@ -13,33 +13,48 @@
 <div th:replace="fragments/header :: header">...</div>
 
 <div style="color: white;" id="main-div">
-    <!-- FORM FOR THE LOGGED IN USER-->
+    <h1 th:if="${session.userAuthorized == true}"><span style="color: #b8bb26; text-transform: lowercase" th:text="${session.user.username}"></span>'s profile</h1>
+    <!-- INFO FOR THE LOGGED IN USER-->
     <div class="profile-div" th:if="${session.userAuthorized == true}">
-        <h1 >Hello there, <span style="margin-left: 10px;" th:text="${session.user.username}"></span></h1>
-        <form class="profile-form" th:action="@{/update/${user.username}}">
-            <h3>If you want to you can update your user profile</h3>
+        <div class="profile-form-div">
+            <form class="profile-form" th:action="@{/update}" method="POST">
+                <label th:for="username">Username</label>
+                <br>
+                <input type="text" id="update-username" name="username" th:value="${session.user.username}">
+                <br>
 
-            <label th:for="username">Username</label>
-            <br>
-            <input type="text" name="username" th:value="${session.user.username}">
+                <br>
+                <label th:for="email">Email</label>
+                <br>
+                <input type="email" id="update-email" name="email" th:value="${session.user.email}">
+                <br>
 
-            <label th:for="email">Email</label>
-            <br>
-            <input type="email" name="email" th:value="${session.user.email}">
+                <br>
+                <label th:for="password">Password</label>
+                <br>
+                <input type="password" id="update-password" name="password">
+                <br>
 
-            <label th:for="password">Password</label>
-            <br>
-            <input type="password" name="password">
-
-            <button type="submit"><a>Save</a></button>
-        </form>
+                <br>
+                <button id="update-button" type="submit"><a>Update</a></button>
+            </form>
+            <button id="delete-account">DELETE ACCOUNT</button>
+        </div>
 
         <div class="tests-info">
-            <div>Test 1 info</div>
-            <div>Test 2 info</div>
-            <div>Test 3 info</div>
-            <div>Test 4 info</div>
-            <div>Test 5 info</div>
+            <div class="display-stats">
+                <h2>Average WPM: 110<span></span></h2>
+               <h2>Tests taken: 128<span></span></h2>
+            </div>
+            <br>
+            <br>
+            <br>
+            <h1>Last 5 tests: </h1>
+            <div class="test-taken">Test 1 info</div>
+            <div class="test-taken">Test 2 info</div>
+            <div class="test-taken">Test 3 info</div>
+            <div class="test-taken">Test 4 info</div>
+            <div class="test-taken">Test 5 info</div>
         </div>
 
     </div>
@@ -47,10 +62,44 @@
     <!-- A DIV DISPLAYING THE INFO FOR THE REST -->
     <div th:if="${session.userAuthorized == false}" id="user-info-display">
 
-        <h1>Username: <span th:text="${session.userRequested.username}"></span></h1>
+        <h1><span th:text="${session.userRequested.username}"></span>'s profile</h1>
+
+        <div class="tests-info">
+            <div class="display-stats">
+                <h2>Average WPM: 110<span></span></h2>
+                <h2>Tests taken: 128<span></span></h2>
+            </div>
+            <br>
+            <br>
+            <br>
+            <h1>Last 5 tests: </h1>
+            <div class="test-taken">Test 1 info</div>
+            <div class="test-taken">Test 2 info</div>
+            <div class="test-taken">Test 3 info</div>
+            <div class="test-taken">Test 4 info</div>
+            <div class="test-taken">Test 5 info</div>
+        </div>
+
     </div>
 
 </div>
+    <script type="text/javascript">
+    let deleteButton = document.querySelector("#delete-account");
 
+    deleteButton.addEventListener("click", deleteUser);
+
+    function deleteUser() {
+        let username = document.getElementById("update-username").value;
+
+        console.log("deleting");
+        let url = "localhost:8080/delete/" + username;
+        return fetch(url, {
+                method: 'DELETE',
+                body: ""
+            }).then(response => response.json())
+
+    }
+
+    </script>
 </body>
 </html>

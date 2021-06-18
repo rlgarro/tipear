@@ -67,11 +67,12 @@ class TestTimer {
         // show WPM info
         writingInput.readOnly = true;
         let result = document.querySelector("#result");
+        let resultSpan = document.querySelector("#result span");
         let rows = [...document.getElementsByClassName("row")];
         rows.forEach((row) => { row.style.display = "none"});
         document.querySelector("#writing-input").style.display = 'none';
         result.style.display = "block";
-        result.innerHTML = `You typed ${this.wordsTyped} words in ${this.initialTime} seconds, which is a rate of ${this.getWPM()}WPM`;
+        resultSpan.innerHTML = `You typed in a rate of ${this.getWPM()}WPM. `;
 
       }
     }, 1000);

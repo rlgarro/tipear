@@ -1,24 +1,20 @@
 package com.roman.tipear.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.sun.istack.NotNull;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Entity
 @Table(name = "users")
 public class UserModel {
-    
+
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "username", unique = true)
@@ -36,11 +32,22 @@ public class UserModel {
     @NotNull
     private String password;
 
-    public UserModel(Long id, String username, String email, String password) {
+    @NotNull
+    @OneToOne(mappedBy = "user")
+    private RegTokenModel token;
+
+    @OneToMany(mappedBy = "user")
+    List<TypingTest> tests;
+
+    @Column(name= "activated", nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean active = false;
+
+    public UserModel(Long id, String username, String email, String password, RegTokenModel token) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.token = token;
     }
 
     public UserModel() {
@@ -80,7 +87,19 @@ public class UserModel {
         this.password = password;
     }
 
+    public void setActive(Boolean activated) {
+        this.active = activated;
+    }
+
     public Boolean userIsActive() {
-        return true;
+        return active;
+    }
+
+    public void setToken(RegTokenModel token) {
+        this.token = token;
+    }
+
+    public RegTokenModel getToken() {
+        return token;
     }
 }

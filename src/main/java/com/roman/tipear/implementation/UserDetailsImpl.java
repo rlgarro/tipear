@@ -1,17 +1,20 @@
 package com.roman.tipear.implementation;
 
-import com.roman.tipear.model.entity.UserModel;
-import com.roman.tipear.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+        import com.roman.tipear.model.entity.UserModel;
+        import com.roman.tipear.repository.UserRepository;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.security.core.authority.SimpleGrantedAuthority;
+        import org.springframework.security.core.context.SecurityContextHolder;
+        import org.springframework.security.core.userdetails.User;
+        import org.springframework.security.core.userdetails.UserDetails;
+        import org.springframework.security.core.userdetails.UserDetailsService;
+        import org.springframework.security.core.userdetails.UsernameNotFoundException;
+        import org.springframework.stereotype.Service;
+
+        import javax.servlet.http.HttpSession;
 
 @Service
-public class UserDetailsImp implements UserDetailsService {
+public class UserDetailsImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;

@@ -23,9 +23,16 @@
   display: none;
   width: 100%;
   margin-top: 10px;
-  height: 25%;
+  height: 100%;
   font-family: "Roboto Mono";
-  font-size: 23px;
+  font-size: 45px;
+}
+
+#login-rec {
+    font-family: "Roboto Mono";
+    cursor: pointer;
+    text-decoration: none;
+    color: #b8bb26;
 }
 
 #writing-div {
