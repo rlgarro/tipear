@@ -48,16 +48,17 @@ class TestTimer {
     // rest 1 to the timer every second
     let outputInterval = setInterval(() => {
       
-      // check if it should stop
+      /* check if it should stop
       if(this.stopInterval) {
         clearInterval(outputInterval);
       }
+      */
 
       this.outputTimer(this.time);
       this.time--; 
 
       // when time is over
-      if(this.time < 0) {
+      if(this.time < 0 || this.stopInterval) {
         
         // stop interval and restart time to default value
         clearInterval(outputInterval); 
@@ -65,15 +66,7 @@ class TestTimer {
         this.outputTimer(this.time);
 
         // show WPM info
-        writingInput.readOnly = true;
-        let result = document.querySelector("#result");
-        let resultSpan = document.querySelector("#result span");
-        let rows = [...document.getElementsByClassName("row")];
-        rows.forEach((row) => { row.style.display = "none"});
-        document.querySelector("#writing-input").style.display = 'none';
-        result.style.display = "block";
-        resultSpan.innerHTML = `You typed in a rate of ${this.getWPM()}WPM. `;
-
+        new OutputManager(text).outputTestResult(writingInput);
       }
     }, 1000);
   }

@@ -1,9 +1,9 @@
   class Test {
 
-  constructor(time) {
+  constructor(time, outputManager) {
     this.timer = new TestTimer(time);
-    this.inputManager = new InputManager(timer);
-    this.outputManager = new OutputManager();
+    this.outputManager = outputManager;
+    this.inputManager = new InputManager(timer, this.outputManager);
     this.setText(this.timer);
   }
 
@@ -16,7 +16,7 @@
   }
 
   start() {
-    this.inputManager.startListening(this.timer);
+    this.inputManager.startListening(this.timer, this.outputManager);
   }
 
   restartStats() {

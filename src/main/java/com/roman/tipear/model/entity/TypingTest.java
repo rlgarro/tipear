@@ -1,13 +1,12 @@
 package com.roman.tipear.model.entity;
 
 import com.sun.istack.NotNull;
-import jdk.jfr.Timestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tests")
+@Table(name = "user_tests")
 public class TypingTest {
 
     @Id
@@ -22,12 +21,23 @@ public class TypingTest {
     @Column(name = "score")
     private int score;
 
-    private LocalDateTime takenAt;
+    @Column(name = "text_id")
+    private Long textId;
 
-    public TypingTest(UserModel user, int score) {
+    private String text;
+
+    private String title;
+
+    public TypingTest(UserModel user, int score, Long textId, String tex, String title) {
         this.user = user;
-        this.takenAt = LocalDateTime.now();
         this.score = score;
+        this.textId = textId;
+        this.text = text;
+        this.title = title;
+    }
+
+    public TypingTest() {
+
     }
 
     public long getId() {
@@ -52,10 +62,6 @@ public class TypingTest {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public LocalDateTime takenAt() {
-        return takenAt;
     }
 
 }

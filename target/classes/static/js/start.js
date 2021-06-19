@@ -5,36 +5,44 @@ window.addEventListener("load", () => {
   links.forEach(link  => {
 
 
-    link.addEventListener("click", (e) => startTest(e));
+    link.addEventListener("click", (e) => start(e));
   });
 });
 
-function startTest(e) {
+function getInfo(regex, text) {
+    let newText = text.split("-");
+    newText[1] = newText[1].replace(regex, " ");
+    return newText;
+}
 
-  let link = e.target;
-  let time = 60;
+function start(e) {
 
-  if (link.id === "60") {
-    time = 60; 
-  }
-  else if (link.id === "180") {
-    time = 180; 
-  }
-  else if (link.id === "300") {
-    time = 300;
-  }
+  // i know it looks ugly
+  let url = "http://localhost:8080/test/randomText";
+  let textInfo = [];
+  let regex = /\\n/;
+  fetch(url).then(resp =>{
+    if(resp.ok) {
+        // first get text
+        resp.text().then(text => {
+            textInfo = getInfo(regex, text);
+            let time = configElements(e);
 
-  document.getElementById("start-div").style.display = "none";
-  document.getElementById("test-div").style.display = "block";
+            console.log("antes", textInfo[1]);
 
-  test = new Test(time);
-  test.start();
-  
-  // add event listener to go back and restart buttons
-  let gobackButton = document.getElementById("goback");
-  let restartButton = document.getElementById("restart");
-  gobackButton.addEventListener("click", goBack);
-  restartButton.addEventListener("click", restartTest);
+            test = new Test(time, new OutputManager(textInfo[1]));
+            test.start();
+            console.log("despues");
+
+            // add event listener to go back and restart buttons
+            let gobackButton = document.getElementById("goback");
+            let restartButton = document.getElementById("restart");
+            gobackButton.addEventListener("click", goBack);
+            restartButton.addEventListener("click", restartTest);
+
+        });
+    }
+  });
 }
 
 function restartTest() {
@@ -48,3 +56,21 @@ function goBack() {
   document.getElementById("test-div").style.display = "none";
 }
 
+function configElements(event) {
+  let link = event.target;
+  let time = 60;
+
+  if (link.id === "60") {
+    time = 60;
+  }
+  else if (link.id === "180") {
+    time = 180;
+  }
+  else if (link.id === "300") {
+    time = 300;
+  }
+
+  document.getElementById("start-div").style.display = "none";
+  document.getElementById("test-div").style.display = "block";
+  return time;
+}

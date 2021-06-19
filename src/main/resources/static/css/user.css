@@ -34,17 +34,21 @@
 .profile-form input{
     width: 60%;
     margin-top: 10px;
-    height: 30px;
-    font-size: 15px;
+    height: 37px;
+    font-size: 18px;
     background-color: #282828;
     color: #ccc;
     font-family: "Roboto Mono";
     font-weight: 300;
+    border-radius: 5px;
+    border: 0;
+    font-weight: Bold;
+    padding: 5px;
 }
 
 .profile-form label{
     width: 100%;
-    font-size: 22px;
+    font-size: 26px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -58,6 +62,8 @@
     font-weight: bold;
     background-color: #458588;
     cursor: pointer;
+    border-radius: 5px;
+    font-size: 22px;
 }
 
 #delete-account {
@@ -71,12 +77,14 @@
     height: 35px;
     font-weight: bold;
     font-size: 25px;
+    border-radius: 5px;
 }
 
 .tests-info {
     width: 40%;
     margin-top: 20px;
     height: 100%;
+    color: #eee;
 }
 
 .display-stats {
@@ -96,7 +104,41 @@
     font-size: 20px;
     border-radius: 5px;
     background-color: #444;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    border-radius: 15px;
+    background-color: #ccc;
 }
+
+.test-primary {
+    height: 35%;
+    width: 100%;
+    background-color: #eee;
+    border-radius: 10px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.test-primary h2 {
+    height: 100%;
+    margin-left: 30px;
+    margin-right: 50px;
+}
+
+.test-secondary {
+    height: 65%;
+    width: 100%;
+    color: #777;
+    display: flex;
+}
+
+.test-secondary h1 {
+    font-size: 35px;
+}
+
 
 #user-info-display {
     width: 100%;
@@ -104,4 +146,5 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: #eee;
 }

@@ -1,7 +1,7 @@
 class InputManager {
 
-  constructor (testTimer) {
-    this.outputManager  = new OutputManager();
+  constructor (testTimer, outputManager) {
+    this.outputManager  = outputManager;
     this.wordsToCompare = this.getOutputWords(this.outputManager);
     this.restarted = false;
 
@@ -157,8 +157,11 @@ class InputManager {
   getOutputWords(manager) {
 
     let outputManager = manager;
-    let text = outputManager.getText();
+    let regex = /\\n/;
+    let text = outputManager.getText().replace(regex, " ");
+    console.log(text);
     let words = text.split(" ");
+    //console.log("WORDS: " + words);
     return words;
   }
 
