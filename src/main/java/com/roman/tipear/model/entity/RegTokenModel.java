@@ -1,6 +1,8 @@
 package com.roman.tipear.model.entity;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class RegTokenModel {
     @NotNull
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserModel user;
 
     @Column(name = "created_at")

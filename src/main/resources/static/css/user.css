@@ -66,19 +66,6 @@
     font-size: 22px;
 }
 
-#delete-account {
-    width: 75%;
-    cursor: pointer;
-    background-color: #fb4934;
-    color: #ffffff;
-    margin-top: 40px;
-    border-color: #fb4934;
-    border-radius: 2px;
-    height: 35px;
-    font-weight: bold;
-    font-size: 25px;
-    border-radius: 5px;
-}
 
 .tests-info {
     width: 40%;
@@ -147,4 +134,86 @@
     justify-content: center;
     align-items: center;
     color: #eee;
+}
+
+#delete-form {
+    width: 75%;
+}
+
+#delete-account {
+    width: 62%;
+    cursor: pointer;
+    background-color: #fb4934;
+    color: #fff;
+    margin-top: 40px;
+    border-color: #fb4934;
+    border-radius: 2px;
+    height: 35px;
+    font-weight: bold;
+    font-size: 25px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#delete-form div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #282828;
+    width: 100%;
+    display: none;
+    border-radius: 5px;
+    height: 250px;
+}
+
+#delete-form div button {
+   width: 150px;
+   height: 46px;
+   color: #fff;
+   background-color: #b8bb26;
+   border: #b8bb26;
+   font-family: "Roboto Mono";
+   font-weight: 900;
+   border-radius: 5px;
+   font-size: 25px;
+   cursor: pointer;
+
+}
+
+#delete-form div a{
+    color: white;
+    font-family: "Roboto Mono";
+    font-size: 25px;
+    margin-left: 50px;
+    background-color: #fb4934;
+    width: 26%;
+    height: 47px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#delete-div {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+}
+
+#delete-div h2{
+    width: 100%;
+    text-align: center;
+    height: 20%;
+    color: #fabd2f;
+}
+
+#delete-buttons-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80%;
 }

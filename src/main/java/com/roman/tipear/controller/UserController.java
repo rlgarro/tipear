@@ -59,7 +59,7 @@ public class UserController {
         String userInSession = "";
 
         if (principal instanceof UserDetails) {
-           userInSession = ((UserDetails) principal).getUsername();
+           userInSession = userServiceImpl.getUsernameFromPrincipal(principal);
            Boolean userIsTheSame = userInSession.equals(userRequested.getUsername());
            if (userIsTheSame) {
                session.setAttribute("userAuthorized", true);
@@ -120,11 +120,10 @@ public class UserController {
         }
 
         String token = user.getToken().getToken();
-        String body = "Your confirmation URL is: ".concat(token);
 
-        emailSender.sendEmail(user.getEmail(), body, "Confirm your account");
+        emailSender.sendEmail(user.getUsername(), user.getEmail(), token, "Confirm your account");
 
-        return "redirect:/login";
+        return "redirect:/login?confirm=true";
     }
 
     @PostMapping("/update")
@@ -132,17 +131,21 @@ public class UserController {
 
         String newPassword = passwordEncoder.encode(user.getPassword());
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userInSession = ((UserDetails) principal).getUsername();
+        String userInSession = userServiceImpl.getUsernameFromPrincipal(principal);
         Long userId = repository.findByUsername(userInSession).getId();
         repository.update(userId, user.getUsername(), user.getEmail(), newPassword);
 
         return "redirect:/login";
     }
 
-    @DeleteMapping("/delete/{username}")
-    public String delete(@PathVariable String username) {
-        UserModel user = userDetailsService.findByUsername(username);
+    @PostMapping("/delete")
+    public String delete() {
+        // make sure user calling api is same as the one being deleted
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userInSession = userServiceImpl.getUsernameFromPrincipal(principal);
+        System.out.println("deleting account server side");
+        UserModel user = userDetailsService.findByUsername(userInSession);
         userDetailsService.delete(user);
-        return "redirect:/";
+        return "redirect:/logout";
     }
 }

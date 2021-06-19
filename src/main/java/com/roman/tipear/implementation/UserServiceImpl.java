@@ -8,6 +8,8 @@ import com.roman.tipear.repository.UserRepository;
 import com.roman.tipear.service.RegTokenService;
 import com.roman.tipear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +81,10 @@ public class UserServiceImpl implements UserService {
         Boolean oneIsDup = userByEmail != null || userByUsername != null;
 
         return oneIsDup;
+    }
+
+    public String getUsernameFromPrincipal(Object principal) {
+        return ((UserDetails) principal).getUsername();
     }
 
     @Override

@@ -38,7 +38,17 @@
                 <br>
                 <button id="update-button" type="submit"><a>Update</a></button>
             </form>
-            <button id="delete-account">DELETE ACCOUNT</button>
+            <form id="delete-form" th:action="@{/delete}" method="POST">
+                <p id="delete-account">DELETE ACCOUNT</p>
+                <div id="delete-div">
+                    <h2>Are you sure you want to delete your account? </h2>
+                    <div id="delete-buttons-div">
+                        <button type="submit" id="confirm-del">Yes</button>
+                        <a id="reject-del">No</a>
+                    </div>
+                </div>
+
+            </form>
         </div>
 
         <div class="tests-info">
@@ -153,21 +163,20 @@
 
 </div>
     <script type="text/javascript">
-    let deleteButton = document.querySelector("#delete-account");
+    window.addEventListener("load", () =>{
+        let delButton = document.querySelector("#delete-account");
+        let delDiv = document.querySelector("#delete-div");
+        let delDivButtons = document.querySelector("#delete-buttons-div");
+        let rejButton = document.querySelector("#reject-del");
+        delButton.addEventListener("click", () => {
+            delDiv.style.display = "flex";
+            delDivButtons.style.display = "flex";
+        });
 
-    deleteButton.addEventListener("click", deleteUser);
-
-    function deleteUser() {
-        let username = document.getElementById("update-username").value;
-
-        console.log("deleting");
-        let url = "localhost:8080/delete/" + username;
-        return fetch(url, {
-                method: 'DELETE',
-                body: ""
-            }).then(response => response.json())
-
-    }
+        rejButton.addEventListener("click", () => {
+            delDiv.style.display = "none";
+        });
+    });
 
     </script>
 </body>

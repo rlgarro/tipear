@@ -14,12 +14,13 @@
 <h1><span class="title-span">Sign in</span></h1>
 <div id="main-div">
     <form class="form" method="POST" th:action="@{/login/process}">
-            <div style="font-size: 25px; color: red;" th:if="${param.error}">Invalid credentials or account deactivated.</div>
+        <div style="font-size: 25px; color: red;" th:if="${param.confirm}" id="confirm-alert" class="alert-invalid"><h2>Confirm your account before login in.</h2></div>
+        <div style="font-size: 25px; color: red;" th:if="${param.error}" class="alert-invalid"><h2>Invalid credentials or account deactivated.</h2></div>
             <input type="text" name="username" required placeholder="Username or email"/>
             <input type="password" name="password" required placeholder="Password"/>
             <div class="form-buttons">
                 <button type="submit">Sign in</button>
-                <button><a th:href="@{/register}">Sign up</a></button>
+                <button class="fake-btn"><a th:href="@{/register}">Sign up</a></button>
             </div>
     </form>
 </div>
