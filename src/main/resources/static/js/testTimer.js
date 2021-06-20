@@ -1,11 +1,12 @@
 class TestTimer {
 
   // default time
-  constructor(time) {
+  constructor(time, outputManager) {
     this.time = time-1;
     this.initialTime = this.time+1;
     this.wordsTyped = 0;
     this.stopInterval;
+    this.outputManager = outputManager;
   }
 
   setWordsTyped(words) {
@@ -61,18 +62,41 @@ class TestTimer {
       if(this.time < 0 || this.stopInterval) {
         
         // stop interval and restart time to default value
-        clearInterval(outputInterval); 
-        this.time = this.initialTime;
-        this.outputTimer(this.time);
+        clearInterval(outputInterval);
 
+        console.log(this.time);
+        console.log(this.stopInterval);
+        console.log(this.time === 0 && this.stopInterval === false);
+        // stopped by time
+        if (this.time === 0 && this.stopInterval === false) {
+            let score = this.getWPM();
+            new InputManager().stopListening();
+            this.outputManager.outputTestResult(input, score);
+        }
         // show WPM info
-        new OutputManager(text).outputTestResult(writingInput);
+        //new OutputManager(text).outputTestResult(writingInput);
       }
     }, 1000);
   }
 
   restart() {
-    this.stopInterval = true;
+    this.stop();
     this.time = this.initialTime;
   }
+
+  getPassedTime() {
+    // TODO: remove variable when sure it works
+    let timePassed = this.initialTime - this.time+1;
+    console.log(timePassed);
+    return timePassed;
+  }
+
+  stop() {
+    this.stopInterval = true;
+  }
+
+  getOutputManager() {
+    return this.outputManager;
+  }
+
 }

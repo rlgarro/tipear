@@ -1,9 +1,9 @@
   class Test {
 
   constructor(time, outputManager) {
-    this.timer = new TestTimer(time);
+    this.timer = new TestTimer(time, outputManager);
     this.outputManager = outputManager;
-    this.inputManager = new InputManager(timer, this.outputManager);
+    this.inputManager = new InputManager(this.timer);
     this.setText(this.timer);
   }
 

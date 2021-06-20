@@ -41,16 +41,16 @@
         </div>
         <div id="test-result">
           <div id="quote-from">
-              <h3>You just typed a quote from the song: </h3>
+              <h3>You just typed a quote from the song:</h3>
           </div>
           <div id="general-result-info">
             <div id="band-info">
-              <h2>Song name</h2>
-              <h4>by Band</h4>
+              <h2 id="song-title"></h2>
+              <h4 id="band-name"></h4>
             </div>
             <div id="result-menu">
               <div id="result-metrics">
-                <h2>Your typing speed is: </h2>
+                <h2>Your typing speed is: <span style="margin-left: 10px;" id="score-span"></span></h2>
               </div>
               <div id="result-menu-buttons">
                <button id="retry-test">Retry</button>
@@ -68,7 +68,7 @@
 
       <div id="menu">
         <a id="goback">Go back</a>
-        <a id="restart">Restart</a>
+        <a id="restart">New test</a>
       </div>
 
     </div>

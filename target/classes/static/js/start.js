@@ -19,7 +19,10 @@ function start(e) {
 
   // i know it looks ugly
   let url = "http://localhost:8080/test/randomText";
-  let textInfo = [];
+
+  // array that holds all the texts info the test can use
+  // (arr with more arrs where each one has a band name, a song name and the song)
+  let textArraysInfo = [];
   let regex = /\\n/;
   fetch(url).then(resp =>{
     if(resp.ok) {
@@ -30,7 +33,17 @@ function start(e) {
 
             console.log("antes", textInfo[1]);
 
-            test = new Test(time, new OutputManager(textInfo[1]));
+            // hardcoded arr info
+            textArraysInfo = [
+                ["song one", "song_one_band", "song one song one song one"],
+                ["song two", "song_two_band", "song two song two song two"],
+                ["song three", "song_three_band", "song three song three song three"],
+                ["song four", "song_four_band", "song four song four song four"],
+                ["song five", "song_five_band", "song five song five song five"],
+                ["song six", "song_six_band", "song six song six song six"]
+            ];
+
+            test = new Test(time, new OutputManager(textArraysInfo, 0));
             test.start();
             console.log("despues");
 
