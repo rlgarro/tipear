@@ -5,7 +5,7 @@ class TestTimer {
     this.time = time-1;
     this.initialTime = this.time+1;
     this.wordsTyped = 0;
-    this.stopInterval;
+    this.stopInterval = false;
     this.outputManager = outputManager;
   }
 
@@ -64,17 +64,20 @@ class TestTimer {
         // stop interval and restart time to default value
         clearInterval(outputInterval);
 
-        console.log(this.time);
-        console.log(this.stopInterval);
-        console.log(this.time === 0 && this.stopInterval === false);
+        console.log(`TIME: ${this.time}`);
+        console.log(`SI: ${this.stopInterval}`);
+        let endedByTime = this.time < 0 && this.stopInterval === false;
+        console.log(`EBT: ${endedByTime}`);
         // stopped by time
-        if (this.time === 0 && this.stopInterval === false) {
+        if (endedByTime) {
+            console.log("ENTERED ENDING")
             let score = this.getWPM();
-            new InputManager().stopListening();
+            let input = document.querySelector("#writing-div input");
+            let inputClone = input.cloneNode(true);
+            input.parentNode.replaceChild(inputClone, input);
+
             this.outputManager.outputTestResult(input, score);
         }
-        // show WPM info
-        //new OutputManager(text).outputTestResult(writingInput);
       }
     }, 1000);
   }

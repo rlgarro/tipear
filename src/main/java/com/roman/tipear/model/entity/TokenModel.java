@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tokens")
 @Component
-public class RegTokenModel {
+public class TokenModel {
 
     @Id
     @Column(name = "token_id")
@@ -29,21 +30,21 @@ public class RegTokenModel {
 
     @Column(name = "created_at")
     @NotNull
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "expires_at")
     @NotNull
-    private LocalDate expiresAt;
+    private LocalDateTime expiresAt;
 
 
-    public RegTokenModel(String token, UserModel user) {
+    public TokenModel(String token, UserModel user) {
         this.user = user;
         this.token = token;
-        this.createdAt = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
         this.expiresAt = createdAt.plusDays(1);
     }
 
-    public RegTokenModel() {
+    public TokenModel() {
         super();
     }
 
@@ -73,19 +74,19 @@ public class RegTokenModel {
                 '}';
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getExpiresAt() {
+    public LocalDateTime getExpiresAt() {
         return expiresAt;
     }
 
-    public void setExpiresAt(LocalDate expiresAt) {
+    public void setExpiresAt(LocalDateTime expiresAt) {
         this.expiresAt = expiresAt;
     }
 

@@ -50,13 +50,16 @@
             </div>
             <div id="result-menu">
               <div id="result-metrics">
-                <h2>Your typing speed is: <span style="margin-left: 10px;" id="score-span"></span></h2>
+                <h2>Your typing speed was: <span style="margin-left: 10px;" id="score-span"></span></h2>
               </div>
-              <div id="result-menu-buttons">
+              <div id="result-menu-buttons" class="res-menu-div">
                <button id="retry-test">Retry</button>
-               <button id="save-test">Save</button>
+               <button th:if="${session.user != null}" id="save-test">Save</button>
               </div>
-          </div>
+                <div id="save-alert" class="res-menu-div">
+                  <p th:if="${session.user == null}">Create an acount to save your tests</p>
+                </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipear | Password recovery</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="fragments/header :: header">...</div>
+    <h1><span class="title-span">Password recovery</span></h1>
+    <div id="main-div">
+        <!-- DO NOT FORGET TO MAKE SURE THE EMAIL BEING ENTERED HERE EXISTS -->
+        <form class="form" th:action="${/recover}" method="POST" >
+            <div style="font-size: 25px; color: red;" th:if="${param.error}" class="alert-invalid"><h2>That email it's not registered.</h2></div>
+            <label>Email of the account</label>
+            <input type="email" placeholder="Enter your email here.." name="email" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+</body>
+</html>

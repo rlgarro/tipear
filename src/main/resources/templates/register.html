@@ -15,14 +15,14 @@
 
             <div style="font-size: 25px; color: red;" id="passwd-alert" class="alert-invalid"><h2>Your password should be 8 characters minimum.</h2></div>
             <div style="font-size: 25px; color: red;" th:if="${param.error}" id="dup-alert" class="alert-invalid"><h2>Username or email already exists.</h2></div>
-            <input type="text" placeholder="Username" name="username">
+            <input type="text" placeholder="Username" name="username" required>
 
-            <input type="text" placeholder="Email" name="email">
+            <input type="text" placeholder="Email" name="email" required>
 
-            <input id="passwd-inp" type="password" placeholder="Password" name="password">
+            <input id="passwd-inp" type="password" placeholder="Password" name="password" required>
 
             <div class="form-buttons">
-                <button id="sign-up" type="submit">Sign up</button>
+                <button id="sign-up" class="real-form-button" type="submit">Sign up</button>
                 <button class="fake-btn"><a th:href="@{/login}">Sign in</a></button>
             </div>
         </form>

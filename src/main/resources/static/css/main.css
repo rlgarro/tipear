@@ -87,6 +87,8 @@ h1 {
     width: 40%;
     height: 75px;
     margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .form-buttons button{
@@ -97,7 +99,6 @@ h1 {
     background-color: #282828;
     cursor: pointer;
     color: #ccc;
-    margin-right: 10px;
     border-color: #666;
     font-family: "Roboto Mono";
     font-weight: 700;
@@ -108,18 +109,32 @@ h1 {
     color: #b8bb26
 }
 
-.fake-btn:hover{
-    color: #b8bb26
-}
-
 .form-buttons button a{
     font-size: 22px;
-    color: #ccc;
     text-decoration: none;
 }
 
-.form-buttons button a:hover{
-    color: #b8bb26
+.real-form-button {
+    color: #ccc;
+}
+
+.fake-btn a{
+    color: #fabd2f;
+}
+
+#password-recover-div {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+#password-recover-div a{
+    font-size: 23px;
+    font-weight: 900;
+    text-decoration: none;
+    color: #b8bb26;
+    cursor: pointer;
 }
 
 .alert-invalid {

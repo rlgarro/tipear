@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Tipear | Login Page</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -19,9 +18,10 @@
             <input type="text" name="username" required placeholder="Username or email"/>
             <input type="password" name="password" required placeholder="Password"/>
             <div class="form-buttons">
-                <button type="submit">Sign in</button>
+                <button type="submit" class="real-form-button">Sign in</button>
                 <button class="fake-btn"><a th:href="@{/register}">Sign up</a></button>
             </div>
+            <div id="password-recover-div"><a href="">Forgot your password?</a></div>
     </form>
 </div>
 </body>

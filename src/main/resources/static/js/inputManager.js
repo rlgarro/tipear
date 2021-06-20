@@ -56,11 +56,10 @@ class InputManager {
       // get written word and rows of text
       let finalWord = vars["word"].join("");
 
+      console.log(`CWI: ${this.testVariables["currentWordIndexInText"]} IOLW: ${this.indexOfLastWordInText}`);
       // check if it's last word in whole text
-      if(this.testVariables["currentWordIndexInText"] === this.indexOfLastWordInText) {
-            console.log(`CWI: ${this.testVariables["currentWordIndexInText"]}`);
-            console.log(`IOLW: ${this.indexOfLastWordInText}`);
-            console.log("ENDING TEST..");
+      if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
+            //console.log(`CWI: ${this.testVariables["currentWordIndexInText"]} IOLW: ${this.indexOfLastWordInText}`);
             this.endTest(vars["wordsTyped"], vars["timer"].getPassedTime());
        }
 
@@ -171,9 +170,7 @@ class InputManager {
     let outputManager = manager;
     let regex = /\\n/;
     let text = outputManager.getText().replace(regex, " ");
-    console.log(text);
     let words = text.split(" ");
-    //console.log("WORDS: " + words);
     return words;
   }
 
@@ -205,7 +202,6 @@ class InputManager {
     this.stopListening();
     this.testVariables["timer"].stop();
     let score = this.getWPM(wordsTyped, passedTime);
-    console.log("CRAFTED SCORE AT ENDTEST: " + score);
     let input = document.querySelector("#writing-div input");
     this.outputManager.outputTestResult(input, score);
   }

@@ -223,11 +223,11 @@
 }
 
 #result-metrics h2 {
-    font-size: 35px;
+    font-size: 32px;
     text-align: start;
 }
 
-#result-menu-buttons {
+.res-menu-div {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -250,4 +250,8 @@
 
 #save-test {
     margin-left: 15px;
+}
+
+#save-alert p {
+    color: #fabd2f;
 }

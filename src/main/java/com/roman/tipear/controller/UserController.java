@@ -2,16 +2,17 @@ package com.roman.tipear.controller;
 
 import com.roman.tipear.email.EmailSenderService;
 import com.roman.tipear.implementation.UserServiceImpl;
-import com.roman.tipear.model.entity.RegTokenModel;
+import com.roman.tipear.model.entity.TokenModel;
 import com.roman.tipear.model.entity.UserModel;
 import com.roman.tipear.model.exception.TokenExpiredException;
 import com.roman.tipear.model.exception.UserAlreadyExistsException;
 import com.roman.tipear.repository.UserRepository;
-import com.roman.tipear.service.RegTokenService;
+import com.roman.tipear.service.TokenService;
 import com.roman.tipear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class UserController {
     private UserService userDetailsService;
 
     @Autowired
-    private RegTokenService tokenService;
+    private TokenService tokenService;
 
     @Autowired
     private UserServiceImpl userServiceImpl;
@@ -94,7 +95,7 @@ public class UserController {
 
     @GetMapping("/confirm/{token}")
     public String confirmUser(Model model, @PathVariable String token) throws TokenExpiredException {
-        RegTokenModel tokenEntity = tokenService.findByToken(token);
+        TokenModel tokenEntity = tokenService.findByToken(token);
 
         try {
           userDetailsService.confirmUserByToken(tokenEntity);
@@ -107,7 +108,22 @@ public class UserController {
 
     }
 
+    @GetMapping("/recover/{token}")
+    public String recoverPassword(Model model, @PathVariable String token) throws TokenExpiredException {
+        TokenModel tokenEntity = tokenService.findByToken(token);
+
+       return "recover?confirmed=true";
+    }
+
     // post mappings
+    @PostMapping("/recover")
+    public String createRecoverToken(@ModelAttribute UserModel user) {
+        Long id = repository.findByEmail(user.getEmail()).getId();
+        user.setId(id);
+        tokenService.register(user);
+        return "redirect:/index?recover=true";
+    }
+
     @PostMapping("/register")
     public String register(@ModelAttribute UserModel user, Model model, HttpSession session) {
         try {

@@ -1,6 +1,5 @@
 package com.roman.tipear.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.sun.istack.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +33,7 @@ public class UserModel {
 
     @NotNull
     @OneToOne(mappedBy = "user")
-    private RegTokenModel token;
+    private TokenModel token;
 
     @OneToMany(mappedBy = "user")
     List<TypingTest> tests;
@@ -42,7 +41,7 @@ public class UserModel {
     @Column(name= "activated", nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean active = false;
 
-    public UserModel(Long id, String username, String email, String password, RegTokenModel token) {
+    public UserModel(Long id, String username, String email, String password, TokenModel token) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -95,11 +94,11 @@ public class UserModel {
         return active;
     }
 
-    public void setToken(RegTokenModel token) {
+    public void setToken(TokenModel token) {
         this.token = token;
     }
 
-    public RegTokenModel getToken() {
+    public TokenModel getToken() {
         return token;
     }
 }

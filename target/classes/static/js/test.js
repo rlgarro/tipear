@@ -27,7 +27,7 @@
   restart() {
     this.inputManager.reset();
     this.timer.restart();
-    this.timer = new TestTimer(this.timer.initialTime);
+    this.timer = new TestTimer(this.timer.initialTime, this.outputManager);
     this.setText(this.timer);
     this.inputManager.startListening(this.timer);
   }

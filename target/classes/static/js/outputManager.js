@@ -10,7 +10,6 @@ class OutputManager {
 
   updateActualArr() {
     if (this.actualArrIndex === this.textsInfo.length-1) {
-        console.log(`EN ESTE MOMENTO LLEGO A 0 VERIFICA: TAIL: ${this.textsInfo.length} AAI: ${this.actualArrIndex}`)
         this.actualArrIndex = 0;
     } else {
         this.actualArrIndex += 1;
@@ -25,8 +24,21 @@ class OutputManager {
     return this.actualArr;
   }
 
+  resetStyles() {
+    // hide old test info
+    document.getElementById("test-result").style.display = "none";
+
+    // show new test
+    document.getElementById("text").style.display = "block";
+    document.getElementById("writing-div").style.display = 'flex';
+    document.getElementById("info-div").style.display = "block";
+    document.getElementById("test-div").style.height = "50%";
+  }
+
   // outputs content when page loads
   outputContent(timer) {
+
+    this.resetStyles();
 
     // set view to default
     let rows = [...document.getElementsByClassName("row")];
@@ -42,7 +54,6 @@ class OutputManager {
     // output text
     let editedText = this.text.split(" ");
     let firstWord = editedText[0];
-    console.log("FW: " + firstWord);
     let secondRow = this.getRowOfWords(editedText, 11, 22);
 
     editedText[0] = "<span id='change-bg'>" + firstWord + "</span>";
@@ -77,8 +88,6 @@ class OutputManager {
   */
   outputTestResult(writingInput, score) {
     writingInput.readOnly = true;
-    console.log("executing")
-    console.log("SCORE ON OM: " + score);
 
     // hide old test info
     document.getElementById("text").style.display = "none";
@@ -90,7 +99,7 @@ class OutputManager {
     document.getElementById("test-div").style.height = "500px";
     document.getElementById("song-title").innerHTML = this.actualArr[0];
     document.getElementById("band-name").innerHTML = this.actualArr[1];
-    document.getElementById("score-span").innerHTML = score.toString();
+    document.getElementById("score-span").innerHTML = score.toString() + "WPM";
 
 
    }
