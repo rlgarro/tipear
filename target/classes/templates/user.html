@@ -62,14 +62,13 @@
             <h1>Last tests: </h1>
             <div th:each="typingTest : ${testsList}" class="test-taken">
                     <div class="test-primary">
-                        <h2 >Score: <span th:text="${typingTest.score}"></span>WPM</h2>
+                        <h3>Score: <span th:text="${typingTest.score}"></span>WPM</h3>
                         <h2>At: <span th:text="${typingTest.title}"></span></h2>
                     </div>
                     <div class="test-secondary">
                         <h1>Author: <span th:text="${typingTest.author}"></span></h1>
                     </div>
             </div>
-
         </div>
     </div>
 
@@ -100,8 +99,7 @@
 
         </div>
 
-    </h3>
-
+    </div>
 </div>
     <script th:src="@{/js/main/deleteUser.js}"></script>
 </body>

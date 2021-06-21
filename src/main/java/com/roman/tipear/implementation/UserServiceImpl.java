@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("Username with that email/username already exists");
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            System.out.println("USER ID BEFORE SAVING: " + user.getId());
             UserModel savedUser  = userRepository.save(user);
             TokenModel token = tokenService.register(savedUser);
             savedUser.setToken(token);
@@ -64,11 +63,9 @@ public class UserServiceImpl implements UserService {
 
         Boolean tokenExpired = token.getExpiresAt().isBefore(LocalDateTime.now());
         if (tokenExpired) {
-            System.out.println("EXPIRO AMIGO");
             throw new TokenExpiredException("token already expired");
         } else {
             UserModel user = token.getUser();
-            System.out.println("USERNAME: " + user.getUsername());
             user.setActive(true);
             tokenRepo.delete(token);
         }

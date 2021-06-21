@@ -59,7 +59,6 @@ class InputManager {
 
       // check if it's last word in whole text
       if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
-            //console.log(`CWI: ${this.testVariables["currentWordIndexInText"]} IOLW: ${this.indexOfLastWordInText}`);
             this.endTest(vars["wordsTyped"], vars["timer"].getPassedTime());
        }
 
@@ -68,9 +67,6 @@ class InputManager {
       let actualRowArr = actualRow.innerHTML.split(" ");
       let nextRow  =  document.querySelector("#next-row");
 
-      console.log(originalRow);
-      console.log("Last Word index: " + vars["lastWordIndex"]);
-      console.log(this.wordsToCompare);
       let wordsMatch = this.wordsMatch(finalWord, originalRow[vars["currentWordIndex"]]);
 
       // update indexes
@@ -231,6 +227,7 @@ class InputManager {
     if (updateText) {
         this.outputManager.updateActualArr();
     }
+
     // set new words to compare to
     this.wordsToCompare = this.getOutputWords(this.outputManager);
     this.indexOfLastWordInText = this.wordsToCompare.length-1;

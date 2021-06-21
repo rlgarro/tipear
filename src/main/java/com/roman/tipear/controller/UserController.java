@@ -88,7 +88,6 @@ public class UserController {
 
             int average = 0;
             for(TypingTest typingTest: testsList) {
-                System.out.println(typingTest.getTitle());
                 average += typingTest.getScore();
             }
             average = average / testsList.size();

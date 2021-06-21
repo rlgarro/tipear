@@ -1,17 +1,17 @@
 var test = "";
 window.addEventListener("load", () => {
-  // if there's any sign remove it passed 2secs
+
+  // if there's any sign remove it passed 5secs
   if (document.getElementById("conf-pass") != null) {
     setTimeout(function(){
         document.getElementById("conf-pass").style.display = "none";
     }, 5000);
   }
 
-  let links = document.getElementsByClassName("testStarter");
-  links = [...links];
-  links.forEach(link  => {
+  let menuLinks = document.getElementsByClassName("testStarter");
+  menuLinks = [...menuLinks];
 
-
+  menuLinks.forEach(link  => {
     link.addEventListener("click", (e) => start(e));
   });
 });
@@ -24,7 +24,6 @@ function getInfo(regex, text) {
 
 function start(e) {
 
-  // i know it looks ugly
   let url = "http://localhost:8080/test/text";
 
   let regex = /\\n/;
@@ -34,15 +33,13 @@ function start(e) {
         resp.text().then(text => {
             let time = configElements(e);
 
-            // arr containing all texts with their respective info (name, content, author)
+            // arr containing all texts
             let texts = JSON.parse(text);
             console.log(texts);
             texts = this.shuffleArray(texts);
 
-
             test = new Test(time, new OutputManager(texts, 0));
             test.start();
-
 
             // menu buttons
             let gobackButton = document.getElementById("goback");
@@ -88,7 +85,6 @@ function configElements(event) {
   else if (link.id === "300") {
     time = 300;
   }
-
   document.getElementById("start-div").style.display = "none";
   document.getElementById("test-div").style.display = "block";
   return time;

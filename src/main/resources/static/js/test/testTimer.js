@@ -64,13 +64,9 @@ class TestTimer {
         // stop interval and restart time to default value
         clearInterval(outputInterval);
 
-        console.log(`TIME: ${this.time}`);
-        console.log(`SI: ${this.stopInterval}`);
         let endedByTime = this.time < 0 && this.stopInterval === false;
-        console.log(`EBT: ${endedByTime}`);
         // stopped by time
         if (endedByTime) {
-            console.log("ENTERED ENDING")
             let score = this.getWPM();
             let input = document.querySelector("#writing-div input");
             let inputClone = input.cloneNode(true);
@@ -90,7 +86,6 @@ class TestTimer {
   getPassedTime() {
     // TODO: remove variable when sure it works
     let timePassed = this.initialTime - this.time+1;
-    console.log(timePassed);
     return timePassed;
   }
 

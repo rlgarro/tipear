@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface TypingTestRepository extends JpaRepository<TypingTest, Long> {
-    @Query(value = "select * from user_tests where user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM user_tests WHERE user_id = ?1 ORDER BY test_id DESC", nativeQuery = true)
     List<TypingTest> findAllByUserId(Long id) throws NotFoundException;
 }

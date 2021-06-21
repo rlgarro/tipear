@@ -20,7 +20,6 @@
   }
 
   restartStats() {
-    // TODO: implement restart button
     this.inputManager.reset();
   }
 

@@ -30,12 +30,4 @@ public class ViewController {
         }
         return "index";
     }
-    @GetMapping("/test")
-    public String testPage(Authentication auth, HttpSession session) {
-        if(session.getAttribute("user") != null) {
-            UserModel user = userService.findByUsername(auth.getName());
-            session.setAttribute("user", user);
-        }
-        return "test";
-    }
 }

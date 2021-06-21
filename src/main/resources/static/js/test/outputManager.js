@@ -6,6 +6,7 @@ class OutputManager {
     this.actualArrIndex = actualArrIndex;
     this.textId = this.actualArr["id"];
     this.wordsPerRow = 15;
+
     // actual text being used
     this.text = this.actualArr["content"];
   }
@@ -19,12 +20,6 @@ class OutputManager {
     this.actualArr = this.textsInfo[this.actualArrIndex];
     this.text = this.actualArr["content"];
   }
-
-  /* we'll call this function when the test ends
-  // so we can display that info and if the user wants save it onto the db.
-  getActualArr() {
-    return this.actualArr;
-  }*/
 
   resetStyles() {
     // hide old test info
@@ -53,7 +48,7 @@ class OutputManager {
     inp.style.display = 'block';
     inp.readOnly = false;
 
-    // output text
+    // output edited styled text and timer
     let editedText = this.text.split(" ");
     let firstWord = editedText[0];
     let secondRow = this.getRowOfWords(editedText, this.wordsPerRow, this.wordsPerRow*2);
@@ -67,7 +62,6 @@ class OutputManager {
     firstRowDiv.innerHTML = firstRow;
     secondRowDiv.innerHTML = secondRow;
 
-    // output time
     timer.outputTimer(timer.initialTime);
 
   }
@@ -104,7 +98,7 @@ class OutputManager {
     document.getElementById("band-name").innerHTML = "By " + this.capitalize(this.actualArr["author"]);
     document.getElementById("score-span").innerHTML = score.toString() + "WPM";
 
-    // add value to the inputs that send the test
+    // add value to the inputs that sends the test
     document.getElementById("score").value = score.toString();
     document.getElementById("author").value = this.actualArr["author"];
     document.getElementById("title").value = this.actualArr["title"];

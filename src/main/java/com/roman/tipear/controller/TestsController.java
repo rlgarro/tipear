@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -32,7 +31,6 @@ public class TestsController {
     @GetMapping(value =  "/test/text")
     @ResponseBody
     public List<Texts> sendTextInfo() {
-
         return textsRepo.findAll();
     }
 
@@ -41,11 +39,9 @@ public class TestsController {
     public String createTest(@ModelAttribute TypingTest test) {
 
         // only save if a user is logged in
-        // get user or anonymous and compare
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Boolean userLoggedIn = principal instanceof UserDetails;
         if (userLoggedIn) {
-            // convert info stored in the string to a new test
             String username = ((UserDetails) principal).getUsername();
             UserModel user = userRepo.findByUsername(username);
 
