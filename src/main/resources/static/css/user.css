@@ -106,13 +106,23 @@
     color: #555;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 }
 
 .test-primary h2 {
     height: 100%;
-    margin-left: 30px;
-    margin-right: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 25px;
+    width: 60%;
+}
+
+.test-primary h3 {
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 25px;
+    width: 40%;
 }
 
 .test-secondary {
@@ -120,6 +130,10 @@
     width: 100%;
     color: #777;
     display: flex;
+}
+
+.test-secondary span{
+    margin-left: 10px;
 }
 
 .test-secondary h1 {

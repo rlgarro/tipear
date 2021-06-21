@@ -28,7 +28,6 @@ public class ViewController {
             UserModel user = userService.findByUsername(((UserDetails) principal).getUsername());
             session.setAttribute("user", user);
         }
-        System.out.println(" find all: " + textsRepo.findAll());
         return "index";
     }
     @GetMapping("/test")

@@ -24,8 +24,8 @@
     this.inputManager.reset();
   }
 
-  restart() {
-    this.inputManager.reset();
+  restart(updateText) {
+    this.inputManager.reset(updateText);
     this.timer.restart();
     this.timer = new TestTimer(this.timer.initialTime, this.outputManager);
     this.setText(this.timer);

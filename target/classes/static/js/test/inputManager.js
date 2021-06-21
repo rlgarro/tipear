@@ -209,7 +209,7 @@ class InputManager {
     this.outputManager.outputTestResult(input, score);
   }
 
-  reset() {
+  reset(updateText) {
 
     this.stopListening();
     this.restarted = true;
@@ -227,8 +227,10 @@ class InputManager {
     let actRow = this.getActualRow();
     let nextRow = this.getNextRow();
 
-    // get a new text
-    this.outputManager.updateActualArr();
+    // Check whether it should cycle the text arr.
+    if (updateText) {
+        this.outputManager.updateActualArr();
+    }
     // set new words to compare to
     this.wordsToCompare = this.getOutputWords(this.outputManager);
     this.indexOfLastWordInText = this.wordsToCompare.length-1;

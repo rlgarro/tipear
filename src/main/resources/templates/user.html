@@ -51,57 +51,26 @@
             </form>
         </div>
 
-        <div class="tests-info">
+        <div th:if="${hasTests == true}" class="tests-info">
             <div class="display-stats">
-                <h2>Average WPM: 110<span></span></h2>
-               <h2>Tests taken: 128<span></span></h2>
+                <h2>Average WPM: <span th:text="${averageWPM}"></span></h2>
+               <h2>Tests taken: <span  th:text="${testsTaken}"></span></h2>
             </div>
             <br>
             <br>
             <br>
             <h1>Last tests: </h1>
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
+            <div th:each="typingTest : ${testsList}" class="test-taken">
+                    <div class="test-primary">
+                        <h2 >Score: <span th:text="${typingTest.score}"></span>WPM</h2>
+                        <h2>At: <span th:text="${typingTest.title}"></span></h2>
+                    </div>
+                    <div class="test-secondary">
+                        <h1>Author: <span th:text="${typingTest.author}"></span></h1>
+                    </div>
             </div>
 
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
-            </div>
-
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
-            </div>
-
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
-            </div>
         </div>
-        </div>
-
     </div>
 
     <!-- A DIV DISPLAYING THE INFO FOR THE REST -->
@@ -109,57 +78,29 @@
 
         <h1><span th:text="${session.userRequested.username}"></span>'s profile</h1>
 
-        <div class="tests-info">
+        <h3 th:if="${hasTests == null}">User has no tests</h3>
+        <div th:if="${hasTests != null}" class="tests-info">
             <div class="display-stats">
-                <h2>Average WPM: 110<span></span></h2>
-                <h2>Tests taken: 128<span></span></h2>
+                <h2>Average WPM: <span th:text="${averageWPM}"></span></h2>
+                <h2>Tests taken: <span th:text="${testsTaken}"></span></h2>
             </div>
             <br>
             <br>
             <br>
             <h1>Last tests: </h1>
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
+            <div th:each="typingTest : ${testsList}" class="test-taken">
+                    <div class="test-primary">
+                        <h3>Score: <span th:text="${typingTest.score}"></span>WPM</h3>
+                        <h2>At: <span th:text="${typingTest.title}"></span></h2>
+                    </div>
+                    <div class="test-secondary">
+                        <h1>Author: <span th:text="${typingTest.author}"></span></h1>
+                    </div>
             </div>
 
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
-            </div>
-
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
-            </div>
-
-            <div class="test-taken">
-                <div class="test-primary">
-                    <h2>Score: 123WPM</h2>
-                    <h2>Song: Song name</h2>
-                </div>
-                <div class="test-secondary">
-                    <h1>Band name: Band</h1>
-                </div>
-            </div>
         </div>
 
-    </div>
+    </h3>
 
 </div>
     <script th:src="@{/js/main/deleteUser.js}"></script>

@@ -25,7 +25,7 @@ function getInfo(regex, text) {
 function start(e) {
 
   // i know it looks ugly
-  let url = "http://localhost:8080/test/randomText";
+  let url = "http://localhost:8080/test/text";
 
   let regex = /\\n/;
   fetch(url).then(resp =>{
@@ -36,24 +36,35 @@ function start(e) {
 
             // arr containing all texts with their respective info (name, content, author)
             let texts = JSON.parse(text);
+            console.log(texts);
+            texts = this.shuffleArray(texts);
 
 
             test = new Test(time, new OutputManager(texts, 0));
             test.start();
 
-            // add event listener to go back and restart buttons
+
+            // menu buttons
             let gobackButton = document.getElementById("goback");
             let restartButton = document.getElementById("restart");
             gobackButton.addEventListener("click", goBack);
             restartButton.addEventListener("click", restartTest);
+
+            // buttons after test ends
+            let replayButton = document.getElementById("retry-test");
+            replayButton.addEventListener("click", replayTest);
 
         });
     }
   });
 }
 
+function replayTest() {
+  test.restart(false);
+}
+
 function restartTest() {
-  test.restart();
+  test.restart(true);
 }
 
 function goBack() {
@@ -81,4 +92,15 @@ function configElements(event) {
   document.getElementById("start-div").style.display = "none";
   document.getElementById("test-div").style.display = "block";
   return time;
+}
+
+function shuffleArray(array) {
+  // Fisher-yates algorithm
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
 }

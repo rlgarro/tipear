@@ -4,6 +4,7 @@ class OutputManager {
     this.textsInfo = textArraysInfo;
     this.actualArr = this.textsInfo[actualArrIndex];
     this.actualArrIndex = actualArrIndex;
+    this.textId = this.actualArr["id"];
     this.wordsPerRow = 15;
     // actual text being used
     this.text = this.actualArr["content"];
@@ -99,10 +100,14 @@ class OutputManager {
     document.getElementById("test-result").style.display = "flex";
     document.getElementById("test-div").style.height = "500px";
     document.getElementById("song-title").innerHTML = this.actualArr["title"];
+    document.querySelector("#quote-from h3").innerHTML += " " + this.actualArr["category"] + ":";
     document.getElementById("band-name").innerHTML = "By " + this.capitalize(this.actualArr["author"]);
     document.getElementById("score-span").innerHTML = score.toString() + "WPM";
 
-
+    // add value to the inputs that send the test
+    document.getElementById("score").value = score.toString();
+    document.getElementById("author").value = this.actualArr["author"];
+    document.getElementById("title").value = this.actualArr["title"];
    }
 
    capitalize(words) {

@@ -24,6 +24,9 @@ public class Texts {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "category")
+    private String category;
+
     public String getContent() {
         return content;
     }
@@ -55,5 +58,13 @@ public class Texts {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -3,13 +3,16 @@ package com.roman.tipear.controller;
 import com.roman.tipear.email.EmailSenderService;
 import com.roman.tipear.implementation.UserServiceImpl;
 import com.roman.tipear.model.entity.TokenModel;
+import com.roman.tipear.model.entity.TypingTest;
 import com.roman.tipear.model.entity.UserModel;
 import com.roman.tipear.model.exception.TokenExpiredException;
 import com.roman.tipear.model.exception.UserAlreadyExistsException;
 import com.roman.tipear.repository.TokenRepository;
+import com.roman.tipear.repository.TypingTestRepository;
 import com.roman.tipear.repository.UserRepository;
 import com.roman.tipear.service.TokenService;
 import com.roman.tipear.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -41,6 +45,9 @@ public class UserController {
     private UserRepository repository;
 
     @Autowired
+    private TypingTestRepository testRepository;
+
+    @Autowired
     private TokenRepository tokenRepo;
 
     @Autowired
@@ -56,6 +63,7 @@ public class UserController {
         if (!userExists) {
             return "404";
         }
+
 
         // check if user session is the same as user in path variable
         UserModel userRequested = userDetailsService.findByUsername(username);
@@ -73,6 +81,28 @@ public class UserController {
            }
         } else {
             session.setAttribute("userAuthorized", false);
+        }
+
+        try {
+            List<TypingTest> testsList = testRepository.findAllByUserId(userRequested.getId());
+
+            int average = 0;
+            for(TypingTest typingTest: testsList) {
+                System.out.println(typingTest.getTitle());
+                average += typingTest.getScore();
+            }
+            average = average / testsList.size();
+            if (testsList.size() >= 4) {
+                testsList = testsList.subList(0, 4);
+            }
+
+            // add the last 4 tests to the model
+            model.addAttribute("testsList", testsList);
+            model.addAttribute("averageWPM", average);
+            model.addAttribute("testsTaken", testsList.size());
+            model.addAttribute("hasTests", true);
+        } catch (NotFoundException exception) {
+            model.addAttribute("hasTests", null);
         }
 
         return "user";

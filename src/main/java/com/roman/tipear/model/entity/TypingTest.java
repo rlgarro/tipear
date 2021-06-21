@@ -3,7 +3,6 @@ package com.roman.tipear.model.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_tests")
@@ -11,7 +10,8 @@ public class TypingTest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
+    @Column(name = "test_id")
+    private Long testId;
 
     @NotNull
     @ManyToOne
@@ -24,28 +24,20 @@ public class TypingTest {
     @Column(name = "text_id")
     private Long textId;
 
-    private String text;
+    private String author;
 
     private String title;
 
-    public TypingTest(UserModel user, int score, Long textId, String tex, String title) {
+    public TypingTest(UserModel user, int score, Long textId, String author, String title) {
         this.user = user;
         this.score = score;
         this.textId = textId;
-        this.text = text;
+        this.author = author;
         this.title = title;
     }
 
     public TypingTest() {
 
-    }
-
-    public long getId() {
-        return Id;
-    }
-
-    public void setId(long id) {
-        Id = id;
     }
 
     public UserModel getUser() {
@@ -64,4 +56,35 @@ public class TypingTest {
         this.score = score;
     }
 
+    public Long getTextId() {
+        return textId;
+    }
+
+    public void setTextId(Long textId) {
+        this.textId = textId;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String text) {
+        this.author = text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
 }

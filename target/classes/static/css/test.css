@@ -1,5 +1,5 @@
 #test-div {
-  width: 60%;
+  width: 80%;
   height: 50%;
   display: none;
 }
@@ -123,7 +123,7 @@
   margin-top: 10px;
   height: 25%;
   font-family: "Roboto Mono";
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
 }
 
@@ -196,7 +196,7 @@
 }
 
 #band-info h2 {
-    font-size: 45px;
+    font-size: 35px;
     width: 100%;
     margin-bottom: 5px;
     text-align: center;
@@ -204,9 +204,10 @@
 
 #band-info h4 {
     font-size: 25px;
-    margin-top: 0;
+    margin-top: 10px;
     width: 100%;
     text-align: center;
+    color: #b8bb26;
 }
 
 #result-menu {
@@ -249,6 +250,13 @@
     cursor: pointer;
 }
 
+#result-menu-buttons form {
+    width: 32%;
+}
+#result-menu-buttons form button{
+    height: 50px;
+    width: 100%;
+}
 #save-test {
     margin-left: 15px;
 }
