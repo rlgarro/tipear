@@ -6,6 +6,7 @@ import com.roman.tipear.model.entity.TokenModel;
 import com.roman.tipear.model.entity.UserModel;
 import com.roman.tipear.model.exception.TokenExpiredException;
 import com.roman.tipear.model.exception.UserAlreadyExistsException;
+import com.roman.tipear.repository.TokenRepository;
 import com.roman.tipear.repository.UserRepository;
 import com.roman.tipear.service.TokenService;
 import com.roman.tipear.service.UserService;
@@ -38,6 +39,9 @@ public class UserController {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private TokenRepository tokenRepo;
 
     @Autowired
     EmailSenderService emailSender;
@@ -108,20 +112,60 @@ public class UserController {
 
     }
 
-    @GetMapping("/recover/{token}")
-    public String recoverPassword(Model model, @PathVariable String token) throws TokenExpiredException {
-        TokenModel tokenEntity = tokenService.findByToken(token);
+    @GetMapping("/recover/password")
+    public String recoverPasswordPage() {
+        return "recoverPassword";
+    }
 
-       return "recover?confirmed=true";
+    @GetMapping("/recover")
+    public String recoverPage() {
+        return "recover";
+    }
+
+    @GetMapping("/recover/confirm/{token}")
+    public String recoverPasswordPage(HttpSession session, @PathVariable String token) throws TokenExpiredException {
+        TokenModel tokenEntity = tokenService.findByToken(token);
+        UserModel user = tokenEntity.getUser();
+        session.setAttribute("email", user.getEmail());
+
+       return "recoverPassword";
     }
 
     // post mappings
     @PostMapping("/recover")
     public String createRecoverToken(@ModelAttribute UserModel user) {
-        Long id = repository.findByEmail(user.getEmail()).getId();
-        user.setId(id);
-        tokenService.register(user);
-        return "redirect:/index?recover=true";
+        Boolean userExists = userServiceImpl.userAlreadyExists("", user.getEmail());
+
+        // create only if that email exists, user is activated, user has 0 tokens.
+        if (userExists) {
+            user = repository.findByEmail(user.getEmail());
+
+
+            Boolean userHasNoTokens = tokenService.tokenByEmail(user.getEmail());
+            if (user.userIsActive() && userHasNoTokens) {
+                tokenService.register(user);
+                return "redirect:/?recover=true";
+            }
+            // get which of the conditions wasn't met
+            else if (user.userIsActive() && !userHasNoTokens) {
+                return "redirect:/recover?token=true";
+            } else {
+                return "redirect:/recover?active=true";
+            }
+        }
+        return "redirect:/recover?email=true";
+    }
+
+    @PostMapping("/recover/password")
+    public String passwordChange(@ModelAttribute UserModel userNewPassword, HttpSession session) {
+
+        UserModel user = repository.findByEmail((String) session.getAttribute("email"));
+        String password = passwordEncoder.encode(userNewPassword.getPassword());
+        user.setPassword(password);
+        repository.update(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
+        tokenRepo.delete(user.getToken());
+        session.removeAttribute("email");
+        return "redirect:/login";
     }
 
     @PostMapping("/register")
@@ -159,7 +203,6 @@ public class UserController {
         // make sure user calling api is same as the one being deleted
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userInSession = userServiceImpl.getUsernameFromPrincipal(principal);
-        System.out.println("deleting account server side");
         UserModel user = userDetailsService.findByUsername(userInSession);
         userDetailsService.delete(user);
         return "redirect:/logout";

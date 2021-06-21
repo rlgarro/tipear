@@ -27,16 +27,6 @@
             </div>
         </form>
     </div>
-    <script>
-        function isValid() {
-          let passwordValue = document.getElementById("passwd-inp").value;
-          if (passwordValue.length < 8) {
-              document.getElementById("passwd-alert").style.display = "block";
-              return false;
-            }
-         }
-
-
-    </script>
 </body>
+<script th:src="@{/js/main/register.js}"></script>
 </html>

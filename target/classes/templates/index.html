@@ -14,6 +14,7 @@
     <div class="main-div">
 
       <div id="start-div">
+        <div style="font-size: 25px; color: #b8bb26;" th:if="${param.recover}" class="alert-invalid"><h2>We've sent you an email to change  your password.</h2></div>
         <h1>Welcome to Tipear...</h1>
         <h2>&lt; A typing test platform &gt;</h2>
 
@@ -77,11 +78,11 @@
     </div>
 
     </div>
-    <script src="js/testTimer.js"></script>
-    <script src="js/inputManager.js"></script>
-    <script src="js/outputManager.js"></script>
-    <script src="js/test.js"></script>
-    <script src="js/testCursor.js"></script>
-    <script src="js/start.js"></script>
+    <script src="js/test/testTimer.js"></script>
+    <script src="js/test/inputManager.js"></script>
+    <script src="js/test/outputManager.js"></script>
+    <script src="js/test/test.js"></script>
+    <script src="js/test/testCursor.js"></script>
+    <script src="js/test/start.js"></script>
   </body>
 </html>

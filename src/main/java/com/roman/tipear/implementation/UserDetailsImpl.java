@@ -39,6 +39,7 @@ public class UserDetailsImpl implements UserDetailsService {
 
         User.UserBuilder builder = User.withUsername(user.getUsername());
         Boolean userEnabled = user.userIsActive();
+        System.out.println("VACIO TOKEN: " + user.getToken());
         builder.disabled(!userEnabled);
         builder.password(user.getPassword());
         builder.authorities(new SimpleGrantedAuthority("ROLE_USER"));
