@@ -3,6 +3,8 @@ package com.roman.tipear.controller;
 import com.roman.tipear.model.entity.Texts;
 import com.roman.tipear.model.entity.TypingTest;
 import com.roman.tipear.model.entity.UserModel;
+
+import java.util.List;
 import java.util.Random;
 import com.roman.tipear.repository.TextsRepository;
 import com.roman.tipear.repository.TypingTestRepository;
@@ -27,16 +29,10 @@ public class TestsController {
 
     @GetMapping(value =  "/test/randomText")
     @ResponseBody
-    public String sendTextInfo() {
+    public List<Texts> sendTextInfo() {
         // get a random text entity from db and send to client
-        Random rand = new Random();
-        int upperBound = 9;
-        long n = rand.nextInt(upperBound)+1;
-        String textInfo = textsRepo.findById(n).toString();
-        textInfo = textInfo.substring(9, textInfo.length()-1);
-        System.out.println(textInfo);
 
-        return textInfo;
+        return textsRepo.findAll();
     }
 
     /*

@@ -1,6 +1,7 @@
 package com.roman.tipear.controller;
 
 import com.roman.tipear.model.entity.UserModel;
+import com.roman.tipear.repository.TextsRepository;
 import com.roman.tipear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpSession;
 public class ViewController {
 
     @Autowired
+    TextsRepository textsRepo;
+
+    @Autowired
     private UserService userService;
 
     @GetMapping("/")
@@ -24,6 +28,7 @@ public class ViewController {
             UserModel user = userService.findByUsername(((UserDetails) principal).getUsername());
             session.setAttribute("user", user);
         }
+        System.out.println(" find all: " + textsRepo.findAll());
         return "index";
     }
     @GetMapping("/test")

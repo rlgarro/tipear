@@ -4,8 +4,9 @@ class OutputManager {
     this.textsInfo = textArraysInfo;
     this.actualArr = this.textsInfo[actualArrIndex];
     this.actualArrIndex = actualArrIndex;
+    this.wordsPerRow = 15;
     // actual text being used
-    this.text = this.actualArr[2];
+    this.text = this.actualArr["content"];
   }
 
   updateActualArr() {
@@ -15,14 +16,14 @@ class OutputManager {
         this.actualArrIndex += 1;
     }
     this.actualArr = this.textsInfo[this.actualArrIndex];
-    this.text = this.actualArr[2];
+    this.text = this.actualArr["content"];
   }
 
-  // we'll call this function when the test ends
+  /* we'll call this function when the test ends
   // so we can display that info and if the user wants save it onto the db.
   getActualArr() {
     return this.actualArr;
-  }
+  }*/
 
   resetStyles() {
     // hide old test info
@@ -54,10 +55,10 @@ class OutputManager {
     // output text
     let editedText = this.text.split(" ");
     let firstWord = editedText[0];
-    let secondRow = this.getRowOfWords(editedText, 11, 22);
+    let secondRow = this.getRowOfWords(editedText, this.wordsPerRow, this.wordsPerRow*2);
 
     editedText[0] = "<span id='change-bg'>" + firstWord + "</span>";
-    let firstRow = this.getRowOfWords(editedText, 0, 11);
+    let firstRow = this.getRowOfWords(editedText, 0, this.wordsPerRow);
 
     let firstRowDiv = document.querySelector("#actual-row");
     let secondRowDiv = document.querySelector("#next-row");
@@ -97,11 +98,21 @@ class OutputManager {
     // show results
     document.getElementById("test-result").style.display = "flex";
     document.getElementById("test-div").style.height = "500px";
-    document.getElementById("song-title").innerHTML = this.actualArr[0];
-    document.getElementById("band-name").innerHTML = this.actualArr[1];
+    document.getElementById("song-title").innerHTML = this.actualArr["title"];
+    document.getElementById("band-name").innerHTML = "By " + this.capitalize(this.actualArr["author"]);
     document.getElementById("score-span").innerHTML = score.toString() + "WPM";
 
 
+   }
+
+   capitalize(words) {
+        let arr = words.split(" ");
+        words = [];
+        arr.forEach(word => {
+            word = word.charAt(0).toUpperCase() + word.slice(1);
+            words.push(word);
+        });
+        return words.join(" ");
    }
 
 }

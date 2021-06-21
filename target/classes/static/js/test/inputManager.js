@@ -4,6 +4,7 @@ class InputManager {
     this.outputManager  = testTimer.getOutputManager();
     this.wordsToCompare = this.getOutputWords(this.outputManager);
     this.indexOfLastWordInText = this.wordsToCompare.length-1;
+    this.wordsPerRow = this.outputManager.wordsPerRow;
     this.restarted = false;
 
     this.testVariables = {
@@ -11,7 +12,7 @@ class InputManager {
       keyPressCount:0,
       currentWordIndex:0, 
       wordsTyped:0,
-      lastWordIndex:21,
+      lastWordIndex: (this.wordsPerRow * 2) -1,
       currentWordIndexInText:0,
       word: [],
     }
@@ -56,7 +57,6 @@ class InputManager {
       // get written word and rows of text
       let finalWord = vars["word"].join("");
 
-      console.log(`CWI: ${this.testVariables["currentWordIndexInText"]} IOLW: ${this.indexOfLastWordInText}`);
       // check if it's last word in whole text
       if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
             //console.log(`CWI: ${this.testVariables["currentWordIndexInText"]} IOLW: ${this.indexOfLastWordInText}`);
@@ -64,11 +64,14 @@ class InputManager {
        }
 
       let actualRow = this.getActualRow();
-      let originalRow = this.wordsToCompare.slice(vars["lastWordIndex"]-21, vars["lastWordIndex"]-10);
+      let originalRow = this.wordsToCompare.slice(vars["lastWordIndex"] - ((this.wordsPerRow * 2) - 1), vars["lastWordIndex"] - (this.wordsPerRow - 1));
       let actualRowArr = actualRow.innerHTML.split(" ");
       let nextRow  =  document.querySelector("#next-row");
 
-      let wordsMatch = this.wordsMatch(finalWord, originalRow[vars["currentWordIndex"]])
+      console.log(originalRow);
+      console.log("Last Word index: " + vars["lastWordIndex"]);
+      console.log(this.wordsToCompare);
+      let wordsMatch = this.wordsMatch(finalWord, originalRow[vars["currentWordIndex"]]);
 
       // update indexes
       vars["currentWordIndex"] += 1;
@@ -102,9 +105,9 @@ class InputManager {
 
         // update both rows and index in original text
         actualRow.innerHTML = nextRow.innerHTML;
-        vars["lastWordIndex"] += 11;
+        vars["lastWordIndex"] += this.wordsPerRow;
         actualRowArr = actualRow.innerHTML.split(" ");
-        nextRow.innerHTML = this.outputManager.getRowOfWords(this.wordsToCompare, vars["lastWordIndex"]-10, vars["lastWordIndex"]+1);
+        nextRow.innerHTML = this.outputManager.getRowOfWords(this.wordsToCompare, vars["lastWordIndex"]-(this.wordsPerRow-1), vars["lastWordIndex"]+1);
         
         vars["currentWordIndex"] = 0;
         styleManager.changeFocus(actualRow, actualRowArr, 0);
@@ -218,7 +221,7 @@ class InputManager {
     this.testVariables["currentWordIndex"] = 0;
     this.testVariables["currentWordIndexInText"] = 0;
     this.testVariables["wordsTyped"] = 0;
-    this.testVariables["lastWordIndex"] = 21;
+    this.testVariables["lastWordIndex"] = (this.wordsPerRow*2)-1;
     this.testVariables["word"] = [];
 
     let actRow = this.getActualRow();
@@ -232,8 +235,8 @@ class InputManager {
 
     // output this new text
     let text = this.outputManager.getText().split(" ");
-    actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, 11);
-    nextRow.innerHTML = this.outputManager.getRowOfWords(text, 11, 22);
+    actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, this.wordsPerRow);
+    nextRow.innerHTML = this.outputManager.getRowOfWords(text, this.wordsPerRow, this.wordsPerRow*2);
   }
 
 }

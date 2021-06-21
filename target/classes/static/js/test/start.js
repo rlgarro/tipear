@@ -35,8 +35,10 @@ function start(e) {
     if(resp.ok) {
         // first get text
         resp.text().then(text => {
-            textInfo = getInfo(regex, text);
+            //textInfo = getInfo(regex, text);
             let time = configElements(e);
+            let texts = JSON.parse(text);
+            console.log(texts[1]["content"]);
 
 
             // hardcoded arr info
@@ -49,7 +51,7 @@ function start(e) {
                 ["song six", "song_six_band", "song six song six song six"]
             ];
 
-            test = new Test(time, new OutputManager(textArraysInfo, 0));
+            test = new Test(time, new OutputManager(texts, 0));
             test.start();
 
             // add event listener to go back and restart buttons
