@@ -143,7 +143,9 @@ public class UserController {
 
             Boolean userHasNoTokens = tokenService.tokenByEmail(user.getEmail());
             if (user.userIsActive() && userHasNoTokens) {
-                tokenService.register(user);
+                TokenModel token = tokenService.register(user);
+                String url = "http://localhost:8080/recover/confirm/" + token.getToken();
+                emailSender.sendEmail(false, user.getUsername(), user.getEmail(), url, "Reset your password");
                 return "redirect:/?recover=true";
             }
             // get which of the conditions wasn't met
@@ -181,7 +183,7 @@ public class UserController {
 
         String token = user.getToken().getToken();
 
-        emailSender.sendEmail(user.getUsername(), user.getEmail(), token, "Confirm your account");
+        emailSender.sendEmail(true, user.getUsername(), user.getEmail(), token, "Confirm your account");
 
         return "redirect:/login?confirm=true";
     }

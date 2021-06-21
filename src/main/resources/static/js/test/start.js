@@ -1,5 +1,12 @@
 var test = "";
 window.addEventListener("load", () => {
+  // if there's any sign remove it passed 2secs
+  if (document.getElementById("conf-pass") != null) {
+    setTimeout(function(){
+        document.getElementById("conf-pass").style.display = "none";
+    }, 5000);
+  }
+
   let links = document.getElementsByClassName("testStarter");
   links = [...links];
   links.forEach(link  => {
