@@ -41,7 +41,7 @@
 @media (max-width: 875px) {
     /* TEST RESULT */
     #quote-from h3 {
-        font-size: 1rem;
+        font-size: 0.85rem;
     }
 
     #general-result-info h2 {
@@ -53,7 +53,7 @@
     }
 
     #result-metrics h2 {
-        font-size: 1rem;
+        font-size: 0.85rem;
     }
 
     #result-menu-buttons button {
@@ -113,6 +113,11 @@
     #result-menu-buttons button {
           height: 30px;
           width: 20%;
+    }
+
+    #result-menu-buttons form button {
+      height: 30px;
+      width: 20%;
     }
 
     #save-alert p {
@@ -204,7 +209,7 @@
         height: 45%;
     }
     #text .row{
-        font-size: 20px;
+        font-size: 18px;
         height: 10%;
         width: 100%;
     }
@@ -219,6 +224,57 @@
 
     #menu a{
         font-size: 21px;
+    }
+
+    .profile-div {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-form-div {
+        width: 90%;
+    }
+
+    .profile-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #update-button {
+        width: 40%;
+        margin-top: 20px;
+    }
+
+    #delete-account {
+        width: 100%;
+    }
+
+    #delete-div h2 {
+        font-size: 16px;
+    }
+
+    #delete-form div a{
+        margin-left: 20px;
+    }
+
+    .test-primary h3 {
+        font-size: 20px;
+    }
+
+    .test-primary h2 {
+        font-size: 20px;
+    }
+
+    .test-secondary h1 {
+        font-size: 21px;
+    }
+
+    .tests-info {
+        width: 90%;
     }
 
 }
