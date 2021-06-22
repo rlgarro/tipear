@@ -86,20 +86,24 @@ public class UserController {
         try {
             List<TypingTest> testsList = testRepository.findAllByUserId(userRequested.getId());
 
-            int average = 0;
-            for(TypingTest typingTest: testsList) {
-                average += typingTest.getScore();
-            }
-            average = average / testsList.size();
-            if (testsList.size() >= 4) {
-                testsList = testsList.subList(0, 4);
-            }
+            if (testsList.size() > 0) {
+                int average = 0;
+                for(TypingTest typingTest: testsList) {
+                    average += typingTest.getScore();
+                }
+                average = average / testsList.size();
+                if (testsList.size() >= 4) {
+                    testsList = testsList.subList(0, 4);
+                }
 
-            // add the last 4 tests to the model
-            model.addAttribute("testsList", testsList);
-            model.addAttribute("averageWPM", average);
-            model.addAttribute("testsTaken", testsList.size());
-            model.addAttribute("hasTests", true);
+                // add the last 4 tests to the model
+                model.addAttribute("testsList", testsList);
+                model.addAttribute("averageWPM", average);
+                model.addAttribute("testsTaken", testsList.size());
+                model.addAttribute("hasTests", true);
+            } else {
+                model.addAttribute("hasTests", null);
+            }
         } catch (NotFoundException exception) {
             model.addAttribute("hasTests", null);
         }
@@ -212,7 +216,9 @@ public class UserController {
 
         String token = user.getToken().getToken();
 
-        emailSender.sendEmail(true, user.getUsername(), user.getEmail(), token, "Confirm your account");
+
+        String url = "http://localhost:8080/confirm/".concat(token);
+        emailSender.sendEmail(true, user.getUsername(), user.getEmail(), url, "Confirm your account");
 
         return "redirect:/login?confirm=true";
     }

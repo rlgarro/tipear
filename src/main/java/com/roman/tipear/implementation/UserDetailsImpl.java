@@ -4,14 +4,12 @@ package com.roman.tipear.implementation;
         import com.roman.tipear.repository.UserRepository;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.security.core.authority.SimpleGrantedAuthority;
-        import org.springframework.security.core.context.SecurityContextHolder;
         import org.springframework.security.core.userdetails.User;
         import org.springframework.security.core.userdetails.UserDetails;
         import org.springframework.security.core.userdetails.UserDetailsService;
         import org.springframework.security.core.userdetails.UsernameNotFoundException;
         import org.springframework.stereotype.Service;
 
-        import javax.servlet.http.HttpSession;
 
 @Service
 public class UserDetailsImpl implements UserDetailsService {
