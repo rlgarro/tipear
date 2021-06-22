@@ -21,6 +21,7 @@
     justify-content: center;
     width: 50%;
     height: 100%;
+    padding: 0;
 }
 
 #header ul li{

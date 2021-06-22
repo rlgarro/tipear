@@ -1,11 +1,11 @@
 class OutputManager {
 
-  constructor (textArraysInfo, actualArrIndex) {
+  constructor (textArraysInfo, actualArrIndex, wordsPerRow) {
     this.textsInfo = textArraysInfo;
     this.actualArr = this.textsInfo[actualArrIndex];
     this.actualArrIndex = actualArrIndex;
     this.textId = this.actualArr["id"];
-    this.wordsPerRow = 15;
+    this.wordsPerRow = wordsPerRow;
 
     // actual text being used
     this.text = this.actualArr["content"];
@@ -29,7 +29,7 @@ class OutputManager {
     document.getElementById("text").style.display = "block";
     document.getElementById("writing-div").style.display = 'flex';
     document.getElementById("info-div").style.display = "block";
-    document.getElementById("test-div").style.height = "50%";
+    //document.getElementById("test-div").style.height = "80%";
   }
 
   // outputs content when page loads
@@ -93,15 +93,17 @@ class OutputManager {
     // show results
     document.getElementById("test-result").style.display = "flex";
     document.getElementById("test-div").style.height = "500px";
-    document.getElementById("song-title").innerHTML = this.actualArr["title"];
+    document.getElementById("song-title").innerHTML = this.actualArr["title"] + " by " + this.actualArr["author"];
     document.querySelector("#quote-from h3").innerHTML += " " + this.actualArr["category"] + ":";
-    document.getElementById("band-name").innerHTML = "By " + this.capitalize(this.actualArr["author"]);
     document.getElementById("score-span").innerHTML = score.toString() + "WPM";
 
-    // add value to the inputs that sends the test
-    document.getElementById("score").value = score.toString();
-    document.getElementById("author").value = this.actualArr["author"];
-    document.getElementById("title").value = this.actualArr["title"];
+    let scoreInp = document.getElementById("score")
+    if (scoreInp !== null) {
+        // add value to the inputs that sends the test
+        scoreInp.value = score.toString();
+        document.getElementById("author").value = this.actualArr["author"];
+        document.getElementById("title").value = this.actualArr["title"];
+    }
    }
 
    capitalize(words) {

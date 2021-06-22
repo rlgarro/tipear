@@ -1,0 +1,236 @@
+@media (max-width: 1090px) {
+    /* FORMS */
+    .form {
+        width: 100%;
+    }
+
+    #password-recover-div a {
+        font-size: 20px;
+    }
+
+    /* TEST RESULT */
+    #test-result {
+       border-radius: 2px;
+    }
+
+    #quote-from {
+        height: 15%;
+    }
+
+    #quote-from h3 {
+        font-size: 1.2rem;
+    }
+
+    #general-result-info h2 {
+        font-size: 1.3rem;
+    }
+
+    #result-metrics{
+        height: 15%;
+    }
+
+    #result-metrics h2 {
+        font-size: 1.2rem;
+    }
+
+    #result-menu-buttons button {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 875px) {
+    /* TEST RESULT */
+    #quote-from h3 {
+        font-size: 1rem;
+    }
+
+    #general-result-info h2 {
+        font-size: 1.1.5rem;
+    }
+
+    #result-metrics{
+        height: 15%;
+    }
+
+    #result-metrics h2 {
+        font-size: 1rem;
+    }
+
+    #result-menu-buttons button {
+        font-size: 16px;
+    }
+
+    #save-alert p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* START / MENU */
+    #start-div h1 {
+        font-size: 38px;
+    }
+
+    /* FORMS */
+    .form {
+        width: 150%;
+    }
+
+    #start-div h2 {
+        font-size: 24px;
+    }
+
+    /* TEST RESULT */
+    #test-result {
+        width: 70%;
+    }
+}
+
+@media (max-width: 568px) {
+    /* START / MENU */
+    #start-div h1 {
+        font-size: 32px;
+    }
+
+    #start-div h2 {
+        font-size: 22px;
+    }
+
+    #header ul li a {
+        font-size: 1.2rem;
+    }
+
+}
+@media (max-width: 540px) {
+    .start-menu li a{
+        font-size: 0.9rem;
+    }
+}
+
+
+@media (max-width: 460px) {
+    /* TEST RESULT */
+    #result-menu-buttons button {
+          height: 30px;
+          width: 20%;
+    }
+
+    #save-alert p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 450px) {
+    #header ul li a{
+        font-size: 1.1rem;
+    }
+
+    /* FORMS */
+    .form input {
+        font-size: 20px;
+    }
+
+    .form-buttons button {
+        font-size: 20px;
+    }
+
+    .form-buttons button a {
+        font-size: 20px;
+    }
+
+    #password-recover-div a {
+        font-size: 20px;
+    }
+
+    #start-div h1 {
+        font-size: 30px;
+    }
+
+    #start-div h2 {
+        font-size: 20px;
+    }
+
+    .start-menu li a {
+        font-size: 0.8rem;
+    }
+    /* TEST RESULT */
+    #test-result {
+        width: 80%;
+    }
+}
+
+
+@media (max-width: 368px) {
+    /* MENU */
+    #header ul li a{
+        font-size: 1.1rem;
+    }
+
+    #start-div h1 {
+        font-size: 45px;
+    }
+
+    #org-title {
+        display: none;
+    }
+
+    #rep-title {
+        display: block;
+    }
+
+    #start-div h2 {
+        font-size: 18px;
+    }
+
+    .start-menu .org-links {
+        display: none;
+    }
+
+    #time-select {
+        display: block;
+    }
+
+    .start-menu .rep-link {
+        display: flex;
+    }
+
+    .start-menu .rep-link a{
+
+        font-size: 1.3rem;
+    }
+
+    /* TEST */
+    #test-div {
+        height: 45%;
+    }
+    #text .row{
+        font-size: 20px;
+        height: 10%;
+        width: 100%;
+    }
+
+    #writing-div input::placeholder {
+       font-size: 16px;
+    }
+
+    #menu {
+        margin-top: 20px;
+    }
+
+    #menu a{
+        font-size: 21px;
+    }
+
+}
+
+@media (min-width: 768px) {
+    .start-menu li {
+        width: 22%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .start-menu li a{
+        font-size: 1.4rem;
+    }
+}

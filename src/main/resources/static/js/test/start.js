@@ -31,14 +31,16 @@ function start(e) {
     if(resp.ok) {
         // first get text
         resp.text().then(text => {
-            let time = configElements(e);
+            let vars = config(e);
+            let time = vars[0];
+            let wordsPerRow = vars[1];
 
             // arr containing all texts
             let texts = JSON.parse(text);
             console.log(texts);
             texts = this.shuffleArray(texts);
 
-            test = new Test(time, new OutputManager(texts, 0));
+            test = new Test(time, new OutputManager(texts, 0, wordsPerRow));
             test.start();
 
             // menu buttons
@@ -72,11 +74,17 @@ function goBack() {
   document.getElementById("test-div").style.display = "none";
 }
 
-function configElements(event) {
+function config(event) {
   let link = event.target;
   let time = 60;
+  let wordsPerRow = 15;
 
-  if (link.id === "60") {
+  if(window.screen.width <= 368) {
+    let select = document.getElementById("time-select");
+    time = select.value;
+    wordsPerRow = 5;
+  }
+  else if (link.id === "60") {
     time = 60;
   }
   else if (link.id === "180") {
@@ -85,9 +93,10 @@ function configElements(event) {
   else if (link.id === "300") {
     time = 300;
   }
+
   document.getElementById("start-div").style.display = "none";
   document.getElementById("test-div").style.display = "block";
-  return time;
+  return [time, wordsPerRow];
 }
 
 function shuffleArray(array) {

@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/test.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/queries.css}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -15,14 +16,21 @@
 
       <div id="start-div">
         <div style="font-size: 23px; color: #eee; background-color: #458588;" th:if="${param.recover}" id="conf-pass" class="alert-invalid"><h2>We've sent you an email to change  your password.</h2></div>
-        <h1>Welcome to Tipear...</h1>
+        <h1 id="org-title">Welcome to Tipear...</h1>
+        <h1 id="rep-title">Tipear</h1>
         <h2 id="start-desc">&lt; A typing test platform &gt;</h2>
 
         <!-- start "menu" to the typing test -->
+        <select id="time-select" class="rep-link">
+          <option value="60">1 minute test</option>
+          <option value="180">3 minute test</option>
+          <option value="300">5 minute test</option>
+        </select>
         <ul class="start-menu">
-          <li><a class="testStarter" id="60">1 minute test</a></li>
-          <li><a class="testStarter" id="180">3 minute test</a></li>
-          <li><a class="testStarter" id="300">5 minute test</a></li>
+          <li class="rep-link"><a class="testStarter" >Start test</a></li>
+          <li class="org-links"><a class="testStarter" id="60">1 minute test</a></li>
+          <li class="org-links"><a class="testStarter" id="180">3 minute test</a></li>
+          <li class="org-links"><a class="testStarter" id="300">5 minute test</a></li>
         </ul>
       </div>
 
@@ -45,27 +53,22 @@
               <h3>You just typed a quote from the</h3>
           </div>
           <div id="general-result-info">
-            <div id="band-info">
               <h2 id="song-title"></h2>
-              <h4 id="band-name"></h4>
-            </div>
-            <div id="result-menu">
               <div id="result-metrics">
                 <h2>Your typing speed was: <span style="margin-left: 10px;" id="score-span"></span></h2>
               </div>
               <div id="result-menu-buttons" class="res-menu-div">
                <button id="retry-test">Retry</button>
-                <form th:action="@{/test}" method="POST">
+                <form th:action="@{/test}" th:if="${session.user != null}" method="POST">
                   <input style="display:none" id="score" name="score" type="text">
                   <input style="display:none" name="author" id="author" type="text">
                   <input style="display:none" name="title" id="title" type="text">
-                  <button type="submit" th:if="${session.user != null}" id="save-test">Save</button>
+                  <button type="submit" id="save-test">Save</button>
                 </form>
               </div>
                 <div id="save-alert" class="res-menu-div">
                   <p th:if="${session.user == null}">Create an account to save your tests</p>
                 </div>
-            </div>
           </div>
         </div>
       </div>
