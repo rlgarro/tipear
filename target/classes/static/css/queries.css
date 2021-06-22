@@ -290,3 +290,15 @@
         font-size: 1.4rem;
     }
 }
+
+@media (max-height: 380px) {
+    #main-div {
+        height: 370px;
+    }
+}
+
+@media (max-height: 650px) {
+    #text-div {
+        height: 100%;
+    }
+}

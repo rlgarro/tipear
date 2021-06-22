@@ -92,7 +92,7 @@ class OutputManager {
 
     // show results
     document.getElementById("test-result").style.display = "flex";
-    document.getElementById("test-div").style.height = "500px";
+    document.getElementById("test-div").style.height = "400px";
     document.getElementById("song-title").innerHTML = this.actualArr["title"] + " by " + this.actualArr["author"];
     document.querySelector("#quote-from h3").innerHTML += " " + this.actualArr["category"] + ":";
     document.getElementById("score-span").innerHTML = score.toString() + "WPM";

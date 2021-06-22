@@ -209,7 +209,7 @@
         height: 45%;
     }
     #text .row{
-        font-size: 18px;
+        font-size: 16px;
         height: 10%;
         width: 100%;
     }
@@ -288,5 +288,17 @@
 @media (min-width: 1024px) {
     .start-menu li a{
         font-size: 1.4rem;
+    }
+}
+
+@media (max-height: 380px) {
+    #main-div {
+        height: 370px;
+    }
+}
+
+@media (max-height: 650px) {
+    #text-div {
+        height: 100%;
     }
 }
