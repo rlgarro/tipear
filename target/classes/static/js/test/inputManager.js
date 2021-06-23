@@ -23,39 +23,55 @@ class InputManager {
     let text  = document.querySelector("#text");
     
     this.testVariables["timer"] = timer;
-    input.addEventListener("keydown", (event) => this.mainLogic(event, input, text, this.testVariables));
-  } 
 
-  mainLogic(event, input, text, vars) {
+    let isMobile = this.userIsOnMobile();
+    if (isMobile) {
+        isMobile = true;
+        input.addEventListener("input", (event) => this.mainLogic(event, input, text, this.testVariables, isMobile));
+    } else {
+        input.addEventListener("keydown", (event) => this.mainLogic(event, input, text, this.testVariables, isMobile));
+    }
+  }
+
+  mainLogic(event, input, text, vars, isMobile) {
 
     if(this.restarted) {
       vars = this.testVariables;
     }
 
     let wordLength = vars["word"].length;
-    
+
     // start the timer only on first keypress
     if (vars["keyPressCount"] === 0) {
       vars["timer"].startTimer(input, text);
       vars["keyPressCount"] = 1;
       input.placeholder = "";
     }
-    
-    // restart array if Control+Backspace
-    else if (event.key == "Backspace" && vars["word"][wordLength-1] == "Control") {
-      vars["word"] = [];
-    }
-    
-    // pop letter from word when backspacing
-    else if (event.key == "Backspace" && wordLength > 0) {
-      vars["word"].pop();
-    }
-    
-    // add letter to word array and compare it to output word
-   else if(event.key === " " && wordLength > 0) {
 
-      // get written word and rows of text
-      let finalWord = vars["word"].join("");
+   let lastIsSpaceOnMob = false;
+   let lastIsSpace = true;
+    if (isMobile === false) {
+        lastIsSpace = event.key === " ";
+        // restart array if Control+Backspace
+        if (event.key == "Backspace" && vars["word"][wordLength-1] == "Control") {
+          vars["word"] = [];
+        }
+        // pop letter from word when backspacing
+        else if (event.key == "Backspace" && wordLength > 0) {
+          vars["word"].pop();
+        }
+    } else { lastIsSpaceOnMob = vars["word"].charAt(wordLength-1) === " "; }
+
+   // add letter to word array and compare it to output word
+   if((lastIsSpace && wordLength > 0) || (lastIsSpaceOnMob && /[a-zA-Z]/.test(vars["word"]))) {
+
+       let finalWord = "";
+       if(isMobile === false) {
+          // get written word and rows of text
+           finalWord = vars["word"].join("");
+       } else {
+            finalWord = vars["word"];
+       }
 
       // check if it's last word in whole text
       if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
@@ -121,7 +137,7 @@ class InputManager {
    }
     
     // special characters ain't letters but their key contains letters
-   else if(this.itsLetter(event.key) && !this.itsSpecialCharacter(event.key)) {
+   else if(this.itsLetter(event.key) && !this.itsSpecialCharacter(event.key) && isMobile === false) {
       vars["word"].push(event.key);
     }
   }
@@ -236,6 +252,10 @@ class InputManager {
     let text = this.outputManager.getText().split(" ");
     actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, this.wordsPerRow);
     nextRow.innerHTML = this.outputManager.getRowOfWords(text, this.wordsPerRow, this.wordsPerRow*2);
+  }
+
+  userIsOnMobile() {
+    return navigator.userAgent.includes("Mobile");
   }
 
 }

@@ -67,8 +67,8 @@
                   <button type="submit" id="save-test">Save</button>
                 </form>
               </div>
-                <div id="save-alert" class="res-menu-div">
-                  <p th:if="${session.user == null}">Create an account to save your tests</p>
+                <div th:if="${session.user == null}" id="save-alert" class="res-menu-div">
+                  <p >Create an account to save your tests</p>
                 </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
 
       <!-- here you input the text, you show the timer and a reboot button -->
       <div id="writing-div">
-        <input placeholder="Type to start.." autocomplete="off" id="writing-input" />
+        <input placeholder="Type to start.." type="text" id="writing-input" />
       </div>
 
       <div id="menu">

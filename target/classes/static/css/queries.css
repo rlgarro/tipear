@@ -187,6 +187,14 @@
         font-size: 18px;
     }
 
+    #conf-pass {
+        width: 70%;
+    }
+
+    #conf-pass h2 {
+        font-size: 15px;
+    }
+
     .start-menu .org-links {
         display: none;
     }
@@ -208,14 +216,18 @@
     #test-div {
         height: 45%;
     }
-    #text .row{
+    #text .row {
         font-size: 16px;
         height: 10%;
         width: 100%;
     }
 
+    #writing-div input {
+        font-size: 22px;
+    }
+
     #writing-div input::placeholder {
-       font-size: 16px;
+       font-size: 20px;
     }
 
     #menu {
@@ -224,6 +236,14 @@
 
     #menu a{
         font-size: 21px;
+    }
+
+    #result-menu-buttons form button {
+        width: 60%;
+    }
+
+    #save-alert {
+        display: none;
     }
 
     /* USER PROFILE */
