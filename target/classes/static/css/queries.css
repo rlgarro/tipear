@@ -209,7 +209,7 @@
         height: 45%;
     }
     #text .row{
-        font-size: 18px;
+        font-size: 16px;
         height: 10%;
         width: 100%;
     }
@@ -279,13 +279,14 @@
 
 }
 
-@media (min-width: 768px) {
+
+@media (min-width: 1250px) {
     .start-menu li {
-        width: 22%;
+        width: 12%;
     }
 }
-
 @media (min-width: 1024px) {
+
     .start-menu li a{
         font-size: 1.4rem;
     }

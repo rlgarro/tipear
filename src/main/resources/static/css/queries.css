@@ -279,13 +279,14 @@
 
 }
 
-@media (min-width: 768px) {
+
+@media (min-width: 1250px) {
     .start-menu li {
-        width: 22%;
+        width: 15%;
     }
 }
-
 @media (min-width: 1024px) {
+
     .start-menu li a{
         font-size: 1.4rem;
     }
