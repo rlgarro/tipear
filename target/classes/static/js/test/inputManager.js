@@ -26,7 +26,6 @@ class InputManager {
 
     let isMobile = this.userIsOnMobile();
     if (isMobile) {
-        isMobile = true;
         input.addEventListener("input", (event) => this.mainLogic(event, input, text, this.testVariables, isMobile));
     } else {
         input.addEventListener("keydown", (event) => this.mainLogic(event, input, text, this.testVariables, isMobile));
@@ -60,7 +59,10 @@ class InputManager {
         else if (event.key == "Backspace" && wordLength > 0) {
           vars["word"].pop();
         }
-    } else { lastIsSpaceOnMob = vars["word"].charAt(wordLength-1) === " "; }
+    } else {
+        vars["word"] = event.data;
+        lastIsSpaceOnMob = vars["word"].charAt(wordLength-1) === " ";
+    }
 
    // add letter to word array and compare it to output word
    if((lastIsSpace && wordLength > 0) || (lastIsSpaceOnMob && /[a-zA-Z]/.test(vars["word"]))) {
@@ -70,7 +72,7 @@ class InputManager {
           // get written word and rows of text
            finalWord = vars["word"].join("");
        } else {
-            finalWord = vars["word"];
+            finalWord = vars["word"].slice(0, wordLength-1);
        }
 
       // check if it's last word in whole text
