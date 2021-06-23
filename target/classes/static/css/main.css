@@ -15,7 +15,8 @@ h1 {
   font-family: "Roboto Mono";
   font-weight: 700;
   color: #fff;
-  font-size: 55px;
+  font-size: 50px;
+  text-align: center;
 }
 
 #main-div {

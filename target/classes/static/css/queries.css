@@ -226,6 +226,7 @@
         font-size: 21px;
     }
 
+    /* USER PROFILE */
     .profile-div {
         width: 100%;
         flex-direction: column;
@@ -277,12 +278,20 @@
         width: 90%;
     }
 
+    .alert-invalid h2  {
+        font-size: 14px;
+    }
+
+    .title-span {
+        font-size: 32px;
+        margin-top: 50px;
+    }
 }
 
 
 @media (min-width: 1250px) {
     .start-menu li {
-        width: 12%;
+        width: 15%;
     }
 }
 @media (min-width: 1024px) {
