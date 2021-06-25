@@ -1,6 +1,6 @@
 package com.roman.tipear.implementation;
 
-        import com.roman.tipear.model.entity.UserModel;
+import com.roman.tipear.model.entity.UserModel;
         import com.roman.tipear.repository.UserRepository;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +25,7 @@ public class UserDetailsImpl implements UserDetailsService {
         Boolean foundByUsername = repository.findByUsername(username) != null;
         Boolean foundByEmail = repository.findByEmail(username) != null;
 
+        // not sure how a username and an email could be the same but...
         if (foundByUsername && foundByEmail) {
             user = repository.findByUsername(username);
         } else if (foundByUsername == false && foundByEmail == true) {

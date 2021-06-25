@@ -13,13 +13,11 @@ import java.util.Collections;
 public class AppUserDetails implements UserDetails {
 
     private String username;
-    private String email;
     private String password;
     private Boolean active;
 
     public AppUserDetails(UserModel user) {
         this.username = user.getUsername();
-        this.email = user.getEmail();
         this.password = user.getPassword();
         this.active = user.userIsActive();
     }

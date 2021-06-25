@@ -15,7 +15,7 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmail(Boolean isForActivation, String username, String receiver, String url, String subject) throws MailException {
+    public void sendEmail(String emailPurpose, String username, String receiver, String url, String subject) throws MailException {
 
         MimeMessage message = mailSender.createMimeMessage();
         try {
@@ -37,12 +37,18 @@ public class EmailSenderService {
                     + "<div style='width: 100%; height: 150px; display: flex;justify-content: center'><a style='width: 90px;height: 50px;margin-left: 250px;font-weight: bold;border-color: #282828;border-radius: 5px;font-size: 32px;background-color: #555; color: #ccc;text-decoration:none;padding: 5px; margin-right: 50px; display: flex; justify-content: center; align-items: center; color: #b8bb26' target='_blank' href='"+url+"'>Reset</a><br><br>" +
                     "<a href='"+url+"' style='font-size:22px;text-align: center'>" + url + "</a></div></div>";
 
+            String accountDeletionByExpiration = "<div style='width: 100%; height: 600px; background-color: #282828; color: #ccc;'><h1 style='padding:50px;width: 100%; color:#ccc;text-align:center;font-size:35px'>Acount deletion<h1><hr><br>" +
+                    "<h2 style='text-align: center; font-size: 20px;color:#ccc'>User, your account got deleted by expiration of activation date.</h2><br>";
 
-            if (isForActivation) {
+
+            if (emailPurpose.equals("activation")) {
                 message.setContent(activationMessageContent, "text/html");
-            } else {
+            } else if (emailPurpose.equals("password")) {
                 message.setContent(passwordMessageContent, "text/html");
+            } else {
+                message.setContent(activationMessageContent, "text/html");
             }
+
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();

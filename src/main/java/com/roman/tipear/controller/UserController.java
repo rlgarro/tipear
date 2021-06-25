@@ -5,7 +5,6 @@ import com.roman.tipear.implementation.UserServiceImpl;
 import com.roman.tipear.model.entity.TokenModel;
 import com.roman.tipear.model.entity.TypingTest;
 import com.roman.tipear.model.entity.UserModel;
-import com.roman.tipear.model.exception.TokenExpiredException;
 import com.roman.tipear.model.exception.UserAlreadyExistsException;
 import com.roman.tipear.repository.TokenRepository;
 import com.roman.tipear.repository.TypingTestRepository;
@@ -131,15 +130,10 @@ public class UserController {
 
 
     @GetMapping("/confirm/{token}")
-    public String confirmUser(Model model, @PathVariable String token) throws TokenExpiredException {
+    public String confirmUser(Model model, @PathVariable String token) {
         TokenModel tokenEntity = tokenService.findByToken(token);
 
-        try {
-          userDetailsService.confirmUserByToken(tokenEntity);
-        } catch (TokenExpiredException tnf) {
-           model.addAttribute("error", "Couldn't confirm your account");
-            return "error";
-        }
+        userDetailsService.confirmUserByToken(tokenEntity);
 
         return "redirect:/login";
 
@@ -156,7 +150,7 @@ public class UserController {
     }
 
     @GetMapping("/recover/confirm/{token}")
-    public String recoverPasswordPage(HttpSession session, @PathVariable String token) throws TokenExpiredException {
+    public String recoverPasswordPage(HttpSession session, @PathVariable String token) {
         TokenModel tokenEntity = tokenService.findByToken(token);
         UserModel user = tokenEntity.getUser();
         session.setAttribute("email", user.getEmail());
@@ -171,16 +165,18 @@ public class UserController {
 
         // create only if that email exists, user is activated, user has 0 tokens.
         if (userExists) {
+
             user = repository.findByEmail(user.getEmail());
-
-
             Boolean userHasNoTokens = tokenService.tokenByEmail(user.getEmail());
+
             if (user.userIsActive() && userHasNoTokens) {
+
                 TokenModel token = tokenService.register(user);
                 String url = "http://localhost:8080/recover/confirm/" + token.getToken();
-                emailSender.sendEmail(false, user.getUsername(), user.getEmail(), url, "Reset your password");
+                emailSender.sendEmail("password", user.getUsername(), user.getEmail(), url, "Reset your password");
                 return "redirect:/?recover=true";
             }
+
             // get which of the conditions wasn't met
             else if (user.userIsActive() && !userHasNoTokens) {
                 return "redirect:/recover?token=true";
@@ -218,7 +214,7 @@ public class UserController {
 
 
         String url = "http://localhost:8080/confirm/".concat(token);
-        emailSender.sendEmail(true, user.getUsername(), user.getEmail(), url, "Confirm your account");
+        emailSender.sendEmail("activation", user.getUsername(), user.getEmail(), url, "Confirm your account");
 
         return "redirect:/login?confirm=true";
     }

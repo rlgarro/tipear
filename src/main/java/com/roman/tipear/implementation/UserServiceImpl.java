@@ -1,14 +1,15 @@
 package com.roman.tipear.implementation;
 
+import com.roman.tipear.email.EmailSenderService;
 import com.roman.tipear.model.entity.TokenModel;
 import com.roman.tipear.model.entity.UserModel;
-import com.roman.tipear.model.exception.TokenExpiredException;
 import com.roman.tipear.model.exception.UserAlreadyExistsException;
 import com.roman.tipear.repository.TokenRepository;
 import com.roman.tipear.repository.UserRepository;
 import com.roman.tipear.service.TokenService;
 import com.roman.tipear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ import java.time.LocalDateTime;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    EmailSenderService emailSenderService;
 
     @Autowired
     TokenService tokenService;
@@ -59,13 +63,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void confirmUserByToken(TokenModel token) throws TokenExpiredException {
+    public void confirmUserByToken(TokenModel token) {
 
         Boolean tokenExpired = token.getExpiresAt().isBefore(LocalDateTime.now());
+        UserModel user = token.getUser();
         if (tokenExpired) {
-            throw new TokenExpiredException("token already expired");
+            // if token expired => delete user and token, send email saying time expired
+            emailSenderService.sendEmail("deletion", "", user.getEmail(), "", "Account registration expired");
+            userRepository.delete(user);
         } else {
-            UserModel user = token.getUser();
             user.setActive(true);
             tokenRepo.delete(token);
         }

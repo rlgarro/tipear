@@ -22,11 +22,13 @@ public class Config extends WebSecurityConfigurerAdapter {
       return new BCryptPasswordEncoder();
    }
 
+   // AUTHENTICATION
    @Override
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
    }
 
+   // AUTHORIZATION
    @Override
    protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests().antMatchers("/login", "/register", "/confirm/**").anonymous().antMatchers("/", "/?recover=true", "/u/**", "/u/js/**", "/test/text", "/css/**", "/js/**", "/recover", "/recover/**").permitAll().anyRequest().authenticated()

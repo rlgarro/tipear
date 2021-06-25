@@ -26,6 +26,7 @@ class InputManager {
 
     let isMobile = this.userIsOnMobile();
     if (isMobile) {
+        isMobile = true;
         input.addEventListener("input", (event) => this.mainLogic(event, input, text, this.testVariables, isMobile));
     } else {
         input.addEventListener("keydown", (event) => this.mainLogic(event, input, text, this.testVariables, isMobile));
@@ -38,6 +39,7 @@ class InputManager {
       vars = this.testVariables;
     }
 
+    console.log(event);
     let wordLength = vars["word"].length;
 
     // start the timer only on first keypress
@@ -48,8 +50,9 @@ class InputManager {
     }
 
    let lastIsSpaceOnMob = false;
-   let lastIsSpace = true;
-    if (isMobile === false) {
+   let lastIsSpace = false;
+   let lastIsCommaOrPoint = false;
+   if (isMobile === false) {
         lastIsSpace = event.key === " ";
         // restart array if Control+Backspace
         if (event.key == "Backspace" && vars["word"][wordLength-1] == "Control") {
@@ -59,20 +62,29 @@ class InputManager {
         else if (event.key == "Backspace" && wordLength > 0) {
           vars["word"].pop();
         }
-    } else {
-        vars["word"] = event.data;
-        lastIsSpaceOnMob = vars["word"].charAt(wordLength-1) === " ";
+    } else { 
+      console.log(event.data);
+      vars["word"] = event.data;
+      console.log(event.data);
+      lastIsSpaceOnMob = vars["word"].includes(" ");
+      lastIsCommaOrPoint = /[,.]/.test(vars["word"].charAt(wordLength-1));
+      console.log(lastIsSpaceOnMob);
+
+
     }
 
+   let hasLetters = /[a-zA-Z]/.test(vars["word"]);
+
    // add letter to word array and compare it to output word
-   if((lastIsSpace && wordLength > 0) || (lastIsSpaceOnMob && /[a-zA-Z]/.test(vars["word"]))) {
+   if((lastIsSpace && wordLength > 0) || (lastIsSpaceOnMob && hasLetters) || (lastIsCommaOrPoint && hasLetters)) {
 
        let finalWord = "";
        if(isMobile === false) {
           // get written word and rows of text
            finalWord = vars["word"].join("");
        } else {
-            finalWord = vars["word"].slice(0, wordLength-1);
+            finalWord = vars["word"].slice(0, wordLength);
+            console.log(vars["word"].slice(0, wordLength-1));
        }
 
       // check if it's last word in whole text
@@ -85,6 +97,7 @@ class InputManager {
       let actualRowArr = actualRow.innerHTML.split(" ");
       let nextRow  =  document.querySelector("#next-row");
 
+      //console.log(`${finalWord} ${originalRow[vars["currentWordIndex"]]}`);
       let wordsMatch = this.wordsMatch(finalWord, originalRow[vars["currentWordIndex"]]);
 
       // update indexes
