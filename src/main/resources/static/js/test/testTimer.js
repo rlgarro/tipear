@@ -56,8 +56,6 @@ class TestTimer {
 
   startTimer(writingInput, text) {
 
-    console.log("timer started");
-
     let outputInterval = setInterval(() => {
       
       this.outputTimer(this.time);

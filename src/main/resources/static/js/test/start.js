@@ -34,8 +34,6 @@ function start(time) {
             // arr containing all texts
             let texts = JSON.parse(text);
             texts = this.shuffleArray(texts);
-            console.log(texts);
-
             test = new Test(finalTime, new OutputManager(texts, 0, wordsPerRow, null, true), false);
             test.start();
 
@@ -66,8 +64,6 @@ function goBack() {
 
   test.restartStats();
   new OutputManager(null, null, null, null, false).resetStyles();
-  document.getElementById("start-div").style.display = "flex";
-  document.getElementById("test-div").style.display = "none";
 }
 
 function config(time) {

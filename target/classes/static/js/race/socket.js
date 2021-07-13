@@ -61,7 +61,7 @@ function sendToRoom(usernameInp) {
     connect();
 
     // send alert with url
-    alert("room url: tipear.herokuapp.com/race/" + roomId + "\n (maximum capacity per room: 2)");
+    alert("room url: localhost:8080/race/" + roomId + "\n (maximum capacity per room: 2)");
 
     let readyBtn = document.querySelector("#clientPlayer button");
 

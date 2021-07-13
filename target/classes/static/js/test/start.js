@@ -66,8 +66,6 @@ function goBack() {
 
   test.restartStats();
   new OutputManager(null, null, null, null, false).resetStyles();
-  document.getElementById("start-div").style.display = "flex";
-  document.getElementById("test-div").style.display = "none";
 }
 
 function config(time) {
