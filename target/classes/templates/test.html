@@ -1,0 +1,78 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Tipear</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/test.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/queries.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+<div class="main-div">
+
+    <!-- here goes the testing environment -->
+    <div id="test-div">
+
+        <span id="timeSpan" th:if="${time != null}" th:text="${time}" style="display: none;"></span>
+        <!-- info div, shows time and wpm -->
+        <div id="info-div">
+            <p id="timer"><span>--</span></p>
+        </div>
+
+        <!-- text div, where you show what should be written -->
+        <div id="text-div">
+            <div id="text">
+                <div class="row" id="actual-row"></div>
+                <div class="row" id="next-row"></div>
+            </div>
+            <div id="test-result">
+                <div id="quote-from">
+                    <h3>You just typed a quote from the</h3>
+                </div>
+                <div id="general-result-info">
+                    <h2 id="song-title"></h2>
+                    <div id="result-metrics">
+                        <h2>Your typing speed was: <span style="margin-left: 10px;" id="score-span"></span></h2>
+                    </div>
+                    <div id="result-menu-buttons" class="res-menu-div">
+                        <button id="retry-test">Retry</button>
+                        <form th:action="@{/test}" th:if="${session.user != null}" method="POST">
+                            <input style="display:none" id="score" name="score" type="text">
+                            <input style="display:none" name="author" id="author" type="text">
+                            <input style="display:none" name="title" id="title" type="text">
+                            <button type="submit" id="save-test">Save</button>
+                        </form>
+                    </div>
+                    <div th:if="${session.user == null}" id="save-alert" class="res-menu-div">
+                        <p >Create an account to save your tests</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- here you input the text, you show the timer and a reboot button -->
+        <div id="writing-div">
+            <input placeholder="Type to start.." type="text" id="writing-input" />
+        </div>
+
+        <div id="menu">
+            <a id="goback">Go back</a>
+            <a id="restart">New test</a>
+        </div>
+
+    </div>
+
+</div>
+<script th:src="@{/js/test/testTimer.js}"></script>
+<script th:src="@{/js/test/inputManager.js}"></script>
+<script th:src="@{/js/test/outputManager.js}"></script>
+<script th:src="@{/js/test/test.js}"></script>
+<script th:src="@{/js/test/testCursor.js}"></script>
+<script th:src="@{/js/test/start.js}"></script>
+</body>
+</html>

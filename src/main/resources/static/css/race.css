@@ -1,0 +1,113 @@
+#getUserName {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#testEnv {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+div input{
+    background-color: #282828;
+    border: #000;
+    height: 45px;
+    width: 350px;
+    color: #ccc;
+    font-size: 25px;
+    border-radius: 5px;
+}
+div button{
+    margin-left: 15px;
+    background-color: #282828;
+    border: #000;
+    height: 45px;
+    width: 150px;
+    color: #ccc;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#test-div {
+    display: none;
+}
+
+#setStatus {
+    display: none;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+#setStatus ul {
+    margin-top: 15px;
+    display: flex;
+}
+
+#setStatus ul li {
+    font-size: 27px;
+    margin-left: 15px;
+    color: #fff;
+    list-style: none;
+}
+
+.percentage-span {
+    color: white;
+    display: none;
+    margin-left: 10px;
+    color: #fb4934;
+}
+
+#setStatus ul li p {
+    margin: 0;
+}
+
+#setStatus ul li button{
+   background-color: #ff0000;
+   font-family: "Roboto Mono";
+   font-weight: Bold;
+   color: #fff;
+}
+
+#clientPlayer {
+    display: flex;
+}
+
+#rivalPlayer {
+    display: none;
+}
+
+#rivalPlayer button{
+   cursor: default;
+}
+
+#general-result-info {
+    background-color: #111;
+}
+
+#result-metrics {
+    background-color: #111;
+    height: 55%;
+}
+
+#result-metrics h2 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+#result-menu-buttons button {
+    width: 57%;
+}
+
+#test-result {
+    background-color: #111;
+}

@@ -6,6 +6,10 @@
             <ul>
                 <li><a th:href="@{/}">Tipear</a></li>
             </ul>
+
+            <ul>
+                <li><a th:href="@{/race}">Race a friend</a></li>
+            </ul>
             <ul th:if="${session.user != null}">
                 <li><a th:href="@{/u/{user}(user = ${session.user.username})}" th:text="${session.user.username}"></a></li>
                 <li><a th:href="@{/logout}">Logout</a></li>

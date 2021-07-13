@@ -1,7 +1,7 @@
 #test-div {
   width: 100%;
   height: 50%;
-  display: none;
+  display: block;
 }
 
 #text-div {
@@ -145,6 +145,7 @@
   border-radius: 5px;
   width: 150px;
   text-align: center;
+  text-decoration: none;
 }
 
 #menu a:hover{

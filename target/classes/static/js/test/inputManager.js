@@ -1,9 +1,10 @@
 class InputManager {
 
-  constructor (testTimer) {
+  constructor (testTimer, isMultiplayer) {
     this.outputManager  = testTimer.getOutputManager();
     this.wordsToCompare = this.getOutputWords(this.outputManager);
     this.indexOfLastWordInText = this.wordsToCompare.length-1;
+    this.multiplayer = isMultiplayer;
     this.wordsPerRow = this.outputManager.wordsPerRow;
     this.restarted = false;
 
@@ -15,14 +16,20 @@ class InputManager {
       lastWordIndex: (this.wordsPerRow * 2) -1,
       currentWordIndexInText:0,
       word: [],
+      wpm: 0,
     }
   }
 
   startListening(timer) {
     let input = document.querySelector("#writing-input");
     let text  = document.querySelector("#text");
-    
+
     this.testVariables["timer"] = timer;
+    if (this.multiplayer === true) {
+        this.outputManager.setMessagesInfo();
+        this.testVariables["keyPressCount"] = 1;
+        this.testVariables["timer"].startTimer(input, text);
+    }
 
     let isMobile = this.userIsOnMobile();
     if (isMobile) {
@@ -39,7 +46,6 @@ class InputManager {
       vars = this.testVariables;
     }
 
-    console.log(event);
     let wordLength = vars["word"].length;
 
     // start the timer only on first keypress
@@ -63,14 +69,9 @@ class InputManager {
           vars["word"].pop();
         }
     } else { 
-      console.log(event.data);
       vars["word"] = event.data;
-      console.log(event.data);
       lastIsSpaceOnMob = vars["word"].includes(" ");
       lastIsCommaOrPoint = /[,.]/.test(vars["word"].charAt(wordLength-1));
-      console.log(lastIsSpaceOnMob);
-
-
     }
 
    let hasLetters = /[a-zA-Z]/.test(vars["word"]);
@@ -84,12 +85,32 @@ class InputManager {
            finalWord = vars["word"].join("");
        } else {
             finalWord = vars["word"].slice(0, wordLength);
-            console.log(vars["word"].slice(0, wordLength-1));
        }
 
       // check if it's last word in whole text
       if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
-            this.endTest(vars["wordsTyped"], vars["timer"].getPassedTime());
+            if(this.multiplayer) {
+                let rivalEndedRace = (document.getElementById("room-info").innerHTML.split(",")[3] === "true");
+
+                // update clients racing status
+                let roomInfoContentArr = document.getElementById("room-info").innerHTML.split(",");
+                roomInfoContentArr[2] = "true";
+                document.getElementById("room-info").innerHTML = roomInfoContentArr.join(",");
+
+                if(rivalEndedRace) {
+                    document.querySelector("#clientPlayer span").style.color = "#b8bb26";
+                    this.outputManager.sendFinished();
+                    this.endTest(vars["wpm"], true);
+                }
+                else  {
+                    document.querySelector("#clientPlayer span").style.color = "#b8bb26";
+                    this.outputManager.sendFinished();
+                    this.endTest(vars["wpm"], false);
+                }
+            }
+            else {
+                this.endTest(vars["wpm"], true);
+            }
        }
 
       let actualRow = this.getActualRow();
@@ -97,7 +118,6 @@ class InputManager {
       let actualRowArr = actualRow.innerHTML.split(" ");
       let nextRow  =  document.querySelector("#next-row");
 
-      //console.log(`${finalWord} ${originalRow[vars["currentWordIndex"]]}`);
       let wordsMatch = this.wordsMatch(finalWord, originalRow[vars["currentWordIndex"]]);
 
       // update indexes
@@ -119,15 +139,24 @@ class InputManager {
         // change color of previous word to green
         actualRowArr[inTextIndex-1] = styleManager.changeColor(actualWord, wordContent, true);
         vars["wordsTyped"] += 1;
-      } 
 
-      else if(wordsMatch === false) {
+      } else if(wordsMatch === false) {
         
         // change color of previous word to red
         actualRowArr[inTextIndex-1] = styleManager.changeColor(actualWord, wordContent, false);
 
       }
-      
+      // update client's and timer's wpm
+      let wpm = vars["timer"].getWpmInTime(vars["wordsTyped"], vars["timer"].getInitialTime() - vars["timer"].getTime());
+      vars["wpm"] = wpm;
+      vars["timer"].setWPM(wpm);
+
+      // send wpm to socket if multiplayer
+      if(this.multiplayer === true) {
+        document.querySelector("#clientPlayer span").innerHTML = wpm+"WPM";
+        this.outputManager.sendWPM(wpm);
+      }
+
       if(isLastWordInRow) {
 
         // update both rows and index in original text
@@ -146,7 +175,7 @@ class InputManager {
       }
 
       // send actual amount of words typed
-      vars["timer"].setWordsTyped(vars["wordsTyped"]);
+      vars["timer"].setWPM(vars["wpm"]);
       vars["word"] = [];
       input.value = "";
    }
@@ -156,7 +185,6 @@ class InputManager {
       vars["word"].push(event.key);
     }
   }
-
 
   wordsMatch(writtenWord, word) {
     if(writtenWord === word) {
@@ -216,11 +244,6 @@ class InputManager {
     row.innerHTML = newRow.innerHTML;
   }
 
-  getWPM(wordsTyped, timeInSeconds) {
-    let wpm = Math.floor(wordsTyped / (timeInSeconds/60));
-    return wpm;
-  }
-
   stopListening() {
     // get input element and RESET IT TO STOCK, no EVENT LISTENER.
     let input = document.querySelector("#writing-div input");
@@ -228,12 +251,14 @@ class InputManager {
     input.parentNode.replaceChild(inputClone, input);
   }
 
-  endTest(wordsTyped, passedTime) {
+  endTest(score, raceEnded) {
     this.stopListening();
     this.testVariables["timer"].stop();
-    let score = this.getWPM(wordsTyped, passedTime);
     let input = document.querySelector("#writing-div input");
-    this.outputManager.outputTestResult(input, score);
+
+    if (!this.multiplayer || raceEnded) {
+        this.outputManager.outputTestResult(input, score);
+    }
   }
 
   reset(updateText) {
@@ -248,6 +273,7 @@ class InputManager {
     this.testVariables["currentWordIndex"] = 0;
     this.testVariables["currentWordIndexInText"] = 0;
     this.testVariables["wordsTyped"] = 0;
+    this.testVariables["wpm"] = 0;
     this.testVariables["lastWordIndex"] = (this.wordsPerRow*2)-1;
     this.testVariables["word"] = [];
 

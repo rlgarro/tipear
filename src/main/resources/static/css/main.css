@@ -159,6 +159,7 @@ h1 {
   align-items: center;
   font-family: "Roboto Mono";
   font-weight: 900;
+  flex-direction: column;
 }
 
 #start-div {
@@ -247,6 +248,9 @@ select {
   cursor: pointer;
 }
 
+.start-menu li a{
+  text-decoration: none;
+}
 .start-menu li a:hover{
   cursor: pointer;
   color: #fff;

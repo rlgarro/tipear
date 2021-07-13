@@ -1,19 +1,15 @@
 var test = "";
 window.addEventListener("load", () => {
 
+  let time = document.getElementById("timeSpan").innerHTML;
   // if there's any sign remove it passed 5secs
   if (document.getElementById("conf-pass") != null) {
     setTimeout(function(){
         document.getElementById("conf-pass").style.display = "none";
     }, 5000);
   }
+  start(time);
 
-  let menuLinks = document.getElementsByClassName("testStarter");
-  menuLinks = [...menuLinks];
-
-  menuLinks.forEach(link  => {
-    link.addEventListener("click", (e) => start(e));
-  });
 });
 
 function getInfo(regex, text) {
@@ -22,25 +18,25 @@ function getInfo(regex, text) {
     return newText;
 }
 
-function start(e) {
+function start(time) {
 
-  let url = "http://localhost:8080/test/text";
+  let url = "http://localhost:8080/texts/all";
 
   let regex = /\\n/;
   fetch(url).then(resp =>{
     if(resp.ok) {
         // first get text
         resp.text().then(text => {
-            let vars = config(e);
-            let time = vars[0];
+            let vars = config(time);
+            let finalTime = vars[0];
             let wordsPerRow = vars[1];
 
             // arr containing all texts
             let texts = JSON.parse(text);
-            console.log(texts);
             texts = this.shuffleArray(texts);
+            console.log(texts);
 
-            test = new Test(time, new OutputManager(texts, 0, wordsPerRow));
+            test = new Test(finalTime, new OutputManager(texts, 0, wordsPerRow, null, true), false);
             test.start();
 
             // menu buttons
@@ -69,34 +65,22 @@ function restartTest() {
 function goBack() {
 
   test.restartStats();
-  new OutputManager([[]], 0).resetStyles();
+  new OutputManager(null, null, null, null, false).resetStyles();
   document.getElementById("start-div").style.display = "flex";
   document.getElementById("test-div").style.display = "none";
 }
 
-function config(event) {
-  let link = event.target;
-  let time = 60;
+function config(time) {
+  let finalTime = time;
   let wordsPerRow = 15;
 
   if(window.screen.width <= 368) {
     let select = document.getElementById("time-select");
-    time = select.value;
+    finalTime = select.value;
     wordsPerRow = 5;
   }
-  else if (link.id === "60") {
-    time = 60;
-  }
-  else if (link.id === "180") {
-    time = 180;
-  }
-  else if (link.id === "300") {
-    time = 300;
-  }
 
-  document.getElementById("start-div").style.display = "none";
-  document.getElementById("test-div").style.display = "block";
-  return [time, wordsPerRow];
+  return [finalTime, wordsPerRow];
 }
 
 function shuffleArray(array) {

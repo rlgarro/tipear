@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Tipear | Race</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/test.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/queries.css}">
+    <link rel="stylesheet" th:href="@{/css/race.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+<span style="display:none;" id="room-span" th:text="${roomId}"></span>
+<div class="main-div">
+
+    <!-- before entering room !-->
+    <div id="getUserName">
+        <input id="nameInp" type="text">
+        <button id="getName">Set name</button>
+    </div>
+
+    <!-- set ready status !-->
+    <div id="setStatus">
+        <span id="room-info" style="display: none;"></span>
+        <ul>
+            <li id="clientPlayer">
+                <p></p>
+                <span class="percentage-span">0WPM</span>
+                <button id="ready-client">Ready</button>
+            </li>
+            <li id="rivalPlayer">
+                <p></p>
+                <span class="percentage-span">0WPM</span>
+                <button id="ready-rival">Ready</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- here goes the testing environment -->
+    <div id="test-div">
+
+        <span id="timeSpan" th:if="${time != null}" th:text="${time}" style="display: none;"></span>
+        <!-- info div, shows time and wpm -->
+        <div id="info-div">
+            <p id="timer"><span>2:00</span></p>
+        </div>
+
+        <!-- text div, where you show what should be written -->
+        <div id="text-div">
+            <div id="text">
+                <div class="row" id="actual-row"></div>
+                <div class="row" id="next-row"></div>
+            </div>
+            <div id="test-result">
+                <div id="general-result-info">
+                    <div id="result-metrics">
+                        <h2>Your typing speed was: </h2>
+                    </div>
+                    <div id="result-menu-buttons" class="res-menu-div">
+                        <button id="retry-test">Go back to lobby</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- here you input the text, you show the timer and a reboot button -->
+        <div id="writing-div">
+            <input placeholder="Type to start.." type="text" id="writing-input" />
+        </div>
+
+        <div id="menu">
+            <a th:href="@{/}" id="goback">Disconnect</a>
+            <a th:href="@{/race}" id="restart">New race</a>
+        </div>
+
+    </div>
+
+</div>
+    <script th:src="@{/js/race/Player.js}"></script>
+    <script th:src="@{/js/race/sockjs.min.js}"></script>
+    <script th:src="@{/js/race/stomp.min.js}"></script>
+    <script th:src="@{/js/race/socket.js}"></script>
+    <script th:src="@{/js/test/testTimer.js}"></script>
+    <script th:src="@{/js/test/inputManager.js}"></script>
+    <script th:src="@{/js/test/outputManager.js}"></script>
+    <script th:src="@{/js/test/test.js}"></script>
+    <script th:src="@{/js/test/testCursor.js}"></script>
+</body>
+</html>

@@ -28,12 +28,6 @@ public class TestsController {
     @Autowired
     UserRepository userRepo;
 
-    @GetMapping(value =  "/test/text")
-    @ResponseBody
-    public List<Texts> sendTextInfo() {
-        return textsRepo.findAll();
-    }
-
     // save new test coming from a js req in a json.
     @PostMapping(value = "/test")
     public String createTest(@ModelAttribute TypingTest test) {

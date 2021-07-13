@@ -4,13 +4,13 @@ class TestTimer {
   constructor(time, outputManager) {
     this.time = time-1;
     this.initialTime = this.time+1;
-    this.wordsTyped = 0;
+    this.wpm = 0;
     this.stopInterval = false;
     this.outputManager = outputManager;
   }
 
-  setWordsTyped(words) {
-    this.wordsTyped = words;
+  setWPM(words) {
+    this.wpm = words;
   }
 
   setTime(seconds) {
@@ -18,11 +18,15 @@ class TestTimer {
     this.initialTime = seconds;
   }
 
-  getWPM() {
-    let wpm = Math.floor((this.wordsTyped * this.initialTime) / 60);
+  getWpmInTime(words, time) {
+    let wpm = Math.round(words * 60 / time);
     return wpm;
   }
- 
+
+  getInitialTime() {
+    return this.initialTime;
+  }
+
   getTime() {
     return this.time;
   }
@@ -44,17 +48,18 @@ class TestTimer {
     }
   }
 
+  startSimpleTimer() {
+    setInterval(() => {
+        this.time--;
+    }, 1000);
+  }
+
   startTimer(writingInput, text) {
-    
-    // rest 1 to the timer every second
+
+    console.log("timer started");
+
     let outputInterval = setInterval(() => {
       
-      /* check if it should stop
-      if(this.stopInterval) {
-        clearInterval(outputInterval);
-      }
-      */
-
       this.outputTimer(this.time);
       this.time--; 
 
@@ -67,12 +72,13 @@ class TestTimer {
         let endedByTime = this.time < 0 && this.stopInterval === false;
         // stopped by time
         if (endedByTime) {
-            let score = this.getWPM();
+
+            // restart eventListener by cloning input
             let input = document.querySelector("#writing-div input");
             let inputClone = input.cloneNode(true);
             input.parentNode.replaceChild(inputClone, input);
 
-            this.outputManager.outputTestResult(input, score);
+            this.outputManager.outputTestResult(input, this.wpm);
         }
       }
     }, 1000);
@@ -96,5 +102,4 @@ class TestTimer {
   getOutputManager() {
     return this.outputManager;
   }
-
 }
