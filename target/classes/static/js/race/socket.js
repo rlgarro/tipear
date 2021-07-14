@@ -42,13 +42,11 @@ function getTextId() {
 }
 
 function getTextById(id) {
-    console.log("IM TRYING TO GET TEXT BY USING: "+id);
     let url = "http://localhost:8080/texts/"+id;
     fetch(url).then(r => {
         if(r.ok) {
             r.text().then(text => {
                 roomText = JSON.parse(text).content;
-                console.log(roomText);
             });
         }
     });

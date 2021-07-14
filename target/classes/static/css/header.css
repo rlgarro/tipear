@@ -45,3 +45,7 @@
 #header ul li a{
     color: #fff;
 }
+
+#header #race-tag {
+  color: #83a598;
+}
