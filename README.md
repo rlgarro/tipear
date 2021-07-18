@@ -1,10 +1,19 @@
-Tipear es un proyecto para evaluar la velocidad de escritura del usuario. 
-
-# Pagina web
+# Pagina web:
 tipear.herokuapp.com
 
-# Tech stack:
-Tipear fue construida usando Spring con Java en el backend y Javascript, HTML y CSS en el frontend.
-En el backend cuenta con la posibilidad de registrar usuario los cuales deberan activar
-su cuenta primero antes de poder usarla, esto, mediante un email de verificacion mandado hacia su
-correo electronico. El usuario una vez creada la cuenta, podra guardar los diferentes tests que realice.
+# Descripción:
+- Tipear es una aplicación web que permite al usuario medir su velocidad de escritura.
+- Tiene un modo practica y un modo carrera donde el test lo realizan dos jugadores conectados en tiempo real.
+- Todo conectado a una base de datos, permite al usuario guardar los tests que va realizando una vez creada una cuenta.
+
+## FRONTEND:
+- Javascript
+- HTML
+- CSS
+
+## BACKEND:
+- Spring Security
+- Spring Web MVC
+- Spring Mail Sender
+- Spring Data JPA
+- Spring Web Socket
