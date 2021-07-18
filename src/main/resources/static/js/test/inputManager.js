@@ -40,6 +40,70 @@ class InputManager {
     }
   }
 
+    startOnFirstKeyPress(vars, input) {
+        // start the timer only on first keypress
+        if (vars["keyPressCount"] === 0) {
+          vars["timer"].startTimer(input, text);
+          vars["keyPressCount"] = 1;
+          input.placeholder = "";
+        }
+    }
+
+  deleteLetterOrWordByDevice(vars, isMobile) {
+       let lastIsSpaceOnMob = false;
+       let lastIsSpace = false;
+       let lastIsCommaOrPoint = false;
+       let wordLength = vars["word"].length;
+
+       if (isMobile === false) {
+            lastIsSpace = event.key === " ";
+            // restart array if Control+Backspace
+            if (event.key == "Backspace" && vars["word"][wordLength-1] == "Control") {
+              vars["word"] = [];
+            }
+            // pop letter from word when backspacing
+            else if (event.key == "Backspace" && wordLength > 0) {
+              vars["word"].pop();
+            }
+        } else {
+          vars["word"] = event.data;
+          lastIsSpaceOnMob = vars["word"].includes(" ");
+          lastIsCommaOrPoint = /[,.]/.test(vars["word"].charAt(wordLength-1));
+        }
+        return [lastIsSpaceOnMob, lastIsSpace, lastIsCommaOrPoint];
+  }
+
+  addLetterByDevice(finalWord, isMobile, vars) {
+       if(isMobile === false) {
+          // get written word and rows of text
+           finalWord = vars["word"].join("");
+       } else {
+            finalWord = vars["word"].slice(0, wordLength);
+       }
+       return vars;
+  }
+
+  handleLastWordInMultiplayer() {
+    this.handleLastWordInMultiplayer();
+    let rivalEndedRace = (document.getElementById("room-info").innerHTML.split(",")[3] === "true");
+
+    // update clients racing status
+    let roomInfoContentArr = document.getElementById("room-info").innerHTML.split(",");
+    roomInfoContentArr[2] = "true";
+    document.getElementById("room-info").innerHTML = roomInfoContentArr.join(",");
+
+    if(rivalEndedRace) {
+        document.querySelector("#clientPlayer span").style.color = "#b8bb26";
+        this.outputManager.sendFinished();
+        this.endTest(vars["wpm"], true);
+    }
+    else  {
+        document.querySelector("#clientPlayer span").style.color = "#b8bb26";
+        this.outputManager.sendFinished();
+        this.endTest(vars["wpm"], false);
+    }
+  }
+
   mainLogic(event, input, text, vars, isMobile) {
 
     if(this.restarted) {
@@ -48,65 +112,26 @@ class InputManager {
 
     let wordLength = vars["word"].length;
 
-    // start the timer only on first keypress
-    if (vars["keyPressCount"] === 0) {
-      vars["timer"].startTimer(input, text);
-      vars["keyPressCount"] = 1;
-      input.placeholder = "";
-    }
+   this.startOnFirstKeyPress(vars, input);
 
-   let lastIsSpaceOnMob = false;
-   let lastIsSpace = false;
-   let lastIsCommaOrPoint = false;
-   if (isMobile === false) {
-        lastIsSpace = event.key === " ";
-        // restart array if Control+Backspace
-        if (event.key == "Backspace" && vars["word"][wordLength-1] == "Control") {
-          vars["word"] = [];
-        }
-        // pop letter from word when backspacing
-        else if (event.key == "Backspace" && wordLength > 0) {
-          vars["word"].pop();
-        }
-    } else { 
-      vars["word"] = event.data;
-      lastIsSpaceOnMob = vars["word"].includes(" ");
-      lastIsCommaOrPoint = /[,.]/.test(vars["word"].charAt(wordLength-1));
-    }
+   let lastWordCasesArr = this.deleteLetterOrWordByDevice(vars, isMobile);
+   let lastIsSpaceOnMob = lastWordCasesArr[0];
+   let lastIsSpace = lastWordCasesArr[1];
+   let lastIsCommaOrPoint = lastWordCasesArr[1];
 
    let hasLetters = /[a-zA-Z]/.test(vars["word"]);
 
-   // add letter to word array and compare it to output word
-   if((lastIsSpace && wordLength > 0) || (lastIsSpaceOnMob && hasLetters) || (lastIsCommaOrPoint && hasLetters)) {
+   let finishedTypingWord = (lastIsSpace && wordLength > 0) || (lastIsSpaceOnMob && hasLetters) || (lastIsCommaOrPoint && hasLetters);
+   if(finishedTypingWord) {
 
-       let finalWord = "";
-       if(isMobile === false) {
-          // get written word and rows of text
-           finalWord = vars["word"].join("");
-       } else {
-            finalWord = vars["word"].slice(0, wordLength);
-       }
+       let finalWord = !isMobile ? vars["word"].join("") : vars["word"].slice(0, wordLength);
+       console.log(finalWord);
+       vars = this.addLetterByDevice(finalWord, isMobile, vars);
 
       // check if it's last word in whole text
       if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
             if(this.multiplayer) {
-                let rivalEndedRace = (document.getElementById("room-info").innerHTML.split(",")[3] === "true");
-
-                // update clients racing status
-                let roomInfoContentArr = document.getElementById("room-info").innerHTML.split(",");
-                roomInfoContentArr[2] = "true";
-                document.getElementById("room-info").innerHTML = roomInfoContentArr.join(",");
-
-                if(rivalEndedRace) {
-                    document.querySelector("#clientPlayer span").style.color = "#b8bb26";
-                    this.outputManager.sendFinished();
-                    this.endTest(vars["wpm"], true);
-                }
-                else  {
-                    document.querySelector("#clientPlayer span").style.color = "#b8bb26";
-                    this.outputManager.sendFinished();
-                    this.endTest(vars["wpm"], false);
-                }
+                this.handleLastWordInMultiplayer();
             }
             else {
                 this.endTest(vars["wpm"], true);
@@ -262,10 +287,43 @@ class InputManager {
   }
 
   reset(updateText) {
-
     this.stopListening();
     this.restarted = true;
 
+    this.resetTestVariables();
+
+    let actRow = this.getActualRow();
+    let nextRow = this.getNextRow();
+
+    // Check whether it should cycle the text arr.
+    if (updateText) {
+        this.outputManager.updateActualArr();
+    }
+
+    this.setNewComparisonText();
+    this.outputNewText();
+  }
+
+  userIsOnMobile() {
+    return navigator.userAgent.includes("Mobile");
+  }
+
+}
+
+function outputNewText() {
+    // output this new text
+    let text = this.outputManager.getText().split(" ");
+    actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, this.wordsPerRow);
+    nextRow.innerHTML = this.outputManager.getRowOfWords(text, this.wordsPerRow, this.wordsPerRow*2);
+}
+
+function setNewComparisonText() {
+    // set new words to compare to
+    this.wordsToCompare = this.getOutputWords(this.outputManager);
+    this.indexOfLastWordInText = this.wordsToCompare.length-1;
+}
+
+function resetTestVariables() {
     // reset test variables
     this.testVariables["timer"].restart();
     this.testVariables["timer"].outputTimer(this.testVariables["timer"].getTime());
@@ -276,27 +334,4 @@ class InputManager {
     this.testVariables["wpm"] = 0;
     this.testVariables["lastWordIndex"] = (this.wordsPerRow*2)-1;
     this.testVariables["word"] = [];
-
-    let actRow = this.getActualRow();
-    let nextRow = this.getNextRow();
-
-    // Check whether it should cycle the text arr.
-    if (updateText) {
-        this.outputManager.updateActualArr();
-    }
-
-    // set new words to compare to
-    this.wordsToCompare = this.getOutputWords(this.outputManager);
-    this.indexOfLastWordInText = this.wordsToCompare.length-1;
-
-    // output this new text
-    let text = this.outputManager.getText().split(" ");
-    actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, this.wordsPerRow);
-    nextRow.innerHTML = this.outputManager.getRowOfWords(text, this.wordsPerRow, this.wordsPerRow*2);
-  }
-
-  userIsOnMobile() {
-    return navigator.userAgent.includes("Mobile");
-  }
-
 }
