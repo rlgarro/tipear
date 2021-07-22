@@ -1,0 +1,5 @@
+1 - abstract code from controllers into services.
+2 - test most important funcionalities.
+3 - create docker image.
+4 - upload to dockerhub.
+5 - deploy to aws.

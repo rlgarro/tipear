@@ -35,7 +35,7 @@ public class UserModel {
     @OneToOne(mappedBy = "user")
     private TokenModel token;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<TypingTest> tests;
 
     @Column(name= "activated", nullable = false, columnDefinition = "TINYINT(1)")
