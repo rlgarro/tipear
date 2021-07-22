@@ -1,6 +1,6 @@
 FROM openjdk:jdk-slim-buster
 
-COPY "./target/tipear-SNAPSHOT.jar" "tipear.jar"
+COPY "./target/tipear-SNP.jar" "tipear.jar"
 
 EXPOSE 8080
 
