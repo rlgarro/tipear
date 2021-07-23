@@ -124,4 +124,6 @@
 		</plugins>
 	</build>
 
+	<finalname>tipear-SNP</finalname>
+
 </project>
