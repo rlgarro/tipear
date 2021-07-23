@@ -122,8 +122,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+	  <finalName>tipear-SNP</finalName>
 	</build>
 
-	<finalname>tipear-SNP</finalname>
 
 </project>

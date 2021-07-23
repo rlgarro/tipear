@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
     roomId = getRoom();
 
     // get room's text
-    let id = getTextId();
+    let id = getTextId(9);
     getTextById(id);
 
     // info about: 1-clientId 2-roomId 3-clientEndedRace 4-rivalEndedRace
@@ -34,9 +34,9 @@ window.addEventListener("load", () => {
 
 });
 
-function getTextId() {
-    if (roomId > 20) {
-        return roomId - (20 * (Math.floor(roomId / 20)));
+function getTextId(amountOfTexts) {
+    if (roomId > amountOfTexts) {
+        return roomId - (amountOfTexts * (Math.floor(roomId / amountOfTexts)));
     }
     return roomId;
 }

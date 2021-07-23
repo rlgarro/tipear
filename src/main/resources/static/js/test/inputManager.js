@@ -83,8 +83,7 @@ class InputManager {
        return vars;
   }
 
-  handleLastWordInMultiplayer() {
-    this.handleLastWordInMultiplayer();
+  handleLastWordInMultiplayer(vars) {
     let rivalEndedRace = (document.getElementById("room-info").innerHTML.split(",")[3] === "true");
 
     // update clients racing status
@@ -130,7 +129,7 @@ class InputManager {
       // check if it's last word in whole text
       if(vars["currentWordIndexInText"] === this.indexOfLastWordInText) {
             if(this.multiplayer) {
-                this.handleLastWordInMultiplayer();
+                this.handleLastWordInMultiplayer(vars);
             }
             else {
                 this.endTest(vars["wpm"], true);
