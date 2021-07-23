@@ -38,7 +38,7 @@ class OutputManager {
     document.getElementById("text").style.display = "block";
     document.getElementById("writing-div").style.display = 'flex';
     document.getElementById("info-div").style.display = "block";
-    //document.getElementById("test-div").style.height = "80%";
+    document.getElementById("test-div").style.height = "50%";
   }
 
   // outputs content when page loads

@@ -96,52 +96,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Model setUserProfileAuthBased(Model model, HttpSession session, String username) {
-        //HashMap<String, Object> configuredProperties = new HashMap<>();
 
-        // check if user session is the same as user in path variable
         UserModel userRequested = this.findByUsername(username);
-        session.setAttribute("userRequested", userRequested);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userInSession = "";
+        this.setUserAuthStateInSession(userRequested, session);
 
-        if (principal instanceof UserDetails) {
-            userInSession = this.getUsernameFromPrincipal(principal);
-            Boolean userIsTheSame = userInSession.equals(userRequested.getUsername());
-            if (userIsTheSame) {
-                session.setAttribute("userAuthorized", true);
-            } else {
-                session.setAttribute("userAuthorized", false);
-            }
-        } else {
-            session.setAttribute("userAuthorized", false);
-        }
-
-        try {
-            List<TypingTest> testsList = testRepository.findAllByUserId(userRequested.getId());
-
-            if (testsList.size() > 0) {
-                int average = 0;
-                for(TypingTest typingTest: testsList) {
-                    average += typingTest.getScore();
-                }
-                average = average / testsList.size();
-                if (testsList.size() >= 4) {
-                    testsList = testsList.subList(0, 4);
-                }
-
-                // add the last 4 tests to the model
-                model.addAttribute("testsList", testsList);
-                model.addAttribute("averageWPM", average);
-                model.addAttribute("testsTaken", testsList.size());
-                model.addAttribute("hasTests", true);
-            } else {
-                model.addAttribute("hasTests", null);
-            }
-        } catch (NotFoundException exception) {
-            model.addAttribute("hasTests", null);
-        }
-
-        return model;
+        return this.setTestsOnModel(userRequested, model);
     }
 
     @Override
@@ -195,6 +154,55 @@ public class UserServiceImpl implements UserService {
         userRepository.fullUpdate(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
         tokenRepo.delete(user.getToken());
         session.removeAttribute("email");
+    }
+
+    public void setUserAuthStateInSession(UserModel userRequested, HttpSession session) {
+
+        session.setAttribute("userRequested", userRequested);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userInSession = "";
+
+        if (principal instanceof UserDetails) {
+            userInSession = this.getUsernameFromPrincipal(principal);
+            Boolean userIsTheSame = userInSession.equals(userRequested.getUsername());
+            if (userIsTheSame) {
+                session.setAttribute("userAuthorized", true);
+            } else {
+                session.setAttribute("userAuthorized", false);
+            }
+        } else {
+            session.setAttribute("userAuthorized", false);
+        }
+    }
+
+    public Model setTestsOnModel(UserModel userRequested, Model model) {
+
+        try {
+            List<TypingTest> testsList = testRepository.findAllByUserId(userRequested.getId());
+
+            if (testsList.size() > 0) {
+                int average = 0;
+                for(TypingTest typingTest: testsList) {
+                    average += typingTest.getScore();
+                }
+                average = average / testsList.size();
+                if (testsList.size() >= 4) {
+                    testsList = testsList.subList(0, 4);
+                }
+
+                // add the last 4 tests to the model
+                model.addAttribute("testsList", testsList);
+                model.addAttribute("averageWPM", average);
+                model.addAttribute("testsTaken", testsList.size());
+                model.addAttribute("hasTests", true);
+            } else {
+                model.addAttribute("hasTests", null);
+            }
+        } catch (NotFoundException exception) {
+            model.addAttribute("hasTests", null);
+        }
+
+        return model;
     }
 
     public Boolean userAlreadyExists(String username, String email) {

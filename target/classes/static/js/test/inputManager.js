@@ -125,7 +125,6 @@ class InputManager {
    if(finishedTypingWord) {
 
        let finalWord = !isMobile ? vars["word"].join("") : vars["word"].slice(0, wordLength);
-       console.log(finalWord);
        vars = this.addLetterByDevice(finalWord, isMobile, vars);
 
       // check if it's last word in whole text
@@ -291,7 +290,6 @@ class InputManager {
     this.restarted = true;
 
     this.resetTestVariables();
-
     let actRow = this.getActualRow();
     let nextRow = this.getNextRow();
 
@@ -301,37 +299,37 @@ class InputManager {
     }
 
     this.setNewComparisonText();
-    this.outputNewText();
+    this.outputNewText(actRow, nextRow);
   }
 
   userIsOnMobile() {
     return navigator.userAgent.includes("Mobile");
   }
 
+    outputNewText(actRow, nextRow) {
+        // output this new text
+        let text = this.outputManager.getText().split(" ");
+        actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, this.wordsPerRow);
+        nextRow.innerHTML = this.outputManager.getRowOfWords(text, this.wordsPerRow, this.wordsPerRow*2);
+    }
+
+    setNewComparisonText() {
+        // set new words to compare to
+        this.wordsToCompare = this.getOutputWords(this.outputManager);
+        this.indexOfLastWordInText = this.wordsToCompare.length-1;
+    }
+
+    resetTestVariables() {
+        // reset test variables
+        this.testVariables["timer"].restart();
+        this.testVariables["timer"].outputTimer(this.testVariables["timer"].getTime());
+        this.testVariables["keyPressCount"] = 0;
+        this.testVariables["currentWordIndex"] = 0;
+        this.testVariables["currentWordIndexInText"] = 0;
+        this.testVariables["wordsTyped"] = 0;
+        this.testVariables["wpm"] = 0;
+        this.testVariables["lastWordIndex"] = (this.wordsPerRow*2)-1;
+        this.testVariables["word"] = [];
+    }
 }
 
-function outputNewText() {
-    // output this new text
-    let text = this.outputManager.getText().split(" ");
-    actRow.innerHTML = this.outputManager.getRowOfWords(text, 0, this.wordsPerRow);
-    nextRow.innerHTML = this.outputManager.getRowOfWords(text, this.wordsPerRow, this.wordsPerRow*2);
-}
-
-function setNewComparisonText() {
-    // set new words to compare to
-    this.wordsToCompare = this.getOutputWords(this.outputManager);
-    this.indexOfLastWordInText = this.wordsToCompare.length-1;
-}
-
-function resetTestVariables() {
-    // reset test variables
-    this.testVariables["timer"].restart();
-    this.testVariables["timer"].outputTimer(this.testVariables["timer"].getTime());
-    this.testVariables["keyPressCount"] = 0;
-    this.testVariables["currentWordIndex"] = 0;
-    this.testVariables["currentWordIndexInText"] = 0;
-    this.testVariables["wordsTyped"] = 0;
-    this.testVariables["wpm"] = 0;
-    this.testVariables["lastWordIndex"] = (this.wordsPerRow*2)-1;
-    this.testVariables["word"] = [];
-}
