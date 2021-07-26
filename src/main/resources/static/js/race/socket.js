@@ -38,7 +38,7 @@ function getTextId(amountOfTexts) {
     if (roomId > amountOfTexts) {
         return roomId - (amountOfTexts * (Math.floor(roomId / amountOfTexts)));
     }
-    return roomId;
+    return roomId-1;
 }
 
 function getTextById(id) {
