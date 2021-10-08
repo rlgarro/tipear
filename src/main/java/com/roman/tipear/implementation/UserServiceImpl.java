@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
 
         Boolean userExists = this.userAlreadyExists("", user.getEmail());
 
-        // create only if that email exists, user is activated, user has 0 tokens.
+        // create only if that email exists && user is activated && user has 0 tokens.
         if (userExists) {
 
             user = userRepository.findByEmail(user.getEmail());
