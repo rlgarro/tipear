@@ -75,7 +75,7 @@ class InputManager {
 
   addLetterByDevice(finalWord, isMobile, vars) {
        if(isMobile === false) {
-          // get written word and rows of text
+           // get written word and rows of text
            finalWord = vars["word"].join("");
        } else {
             finalWord = vars["word"].slice(0, wordLength);
@@ -268,7 +268,7 @@ class InputManager {
   }
 
   stopListening() {
-    // get input element and RESET IT TO STOCK, no EVENT LISTENER.
+    // get input element and reset it to stock, no event listener.
     let input = document.querySelector("#writing-div input");
     let inputClone = input.cloneNode(true);
     input.parentNode.replaceChild(inputClone, input);
